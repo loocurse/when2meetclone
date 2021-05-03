@@ -7,9 +7,12 @@
 
 <script>
 import Calendar from "../components/Calendar.vue";
+import CalendarGenerator from "../utils/CalendarGenerator";
 
 export default {
   components: { Calendar },
-  setup() {},
+  setup() {
+    CalendarGenerator();
+  },
 };
 </script>
