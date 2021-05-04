@@ -1,101 +1,16 @@
 <template>
   <div class="calendar">
-    <!--<div class="labels">
-      <div class="hour-label">9:00 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-      <div class="hour-label">9:30 am</div>
-    </div>-->
-    <div></div>
-
-    <div class="day">
+    <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
       <div
         class="hour"
+        v-for="(hour, index) in timeList"
+        :key="`${index}${hour}`"
         @mousedown="handler"
         @mousemove.prevent="handler2"
+        :id="`${day.toDateString()} ${hour.toTimeString()}`"
       ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div
-        class="hour"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-      ></div>
-      <div class="hour" @click="handler" @mousemove="handler2"></div>
-      <div class="hour" @click="handler" @mousemove="handler2"></div>
-      <div class="hour"></div>
     </div>
-    <div class="day">
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-    </div>
-    <div class="day">
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-      <div class="hour"></div>
-    </div>
+    <button @click="print">Click me</button>
   </div>
 </template>
 
@@ -105,28 +20,45 @@ import CalendarGenerator from "@/utils/CalendarGenerator";
 export default {
   setup() {
     let setting = true;
+    let timeSelected = [];
+
+    const addEvent = (event) => {
+      event.target.classList.add("selected");
+      if (timeSelected.indexOf(event.target.id) === -1) {
+        timeSelected.push(event.target.id);
+      }
+    };
+
+    const removeEvent = (event) => {
+      event.target.classList.remove("selected");
+      timeSelected = timeSelected.filter((val) => {
+        return val !== event.target.id;
+      });
+    };
 
     const handler = (event) => {
       if (event.target.classList.value.includes("selected")) {
         setting = false;
+        removeEvent(event);
       } else {
         setting = true;
+        addEvent(event);
       }
-      event.target.classList.toggle("selected");
     };
 
     const handler2 = (event) => {
-      if (event.buttons === 1) {
-        if (setting) {
-          event.target.classList.add("selected");
-        } else {
-          event.target.classList.remove("selected");
-        }
+      let mouseClickedDown = event.buttons === 1;
+      if (mouseClickedDown) {
+        setting ? addEvent(event) : removeEvent(event);
       }
     };
+    const print = () => {
+      console.log(timeSelected);
+    };
 
-    const data = CalendarGenerator();
-    return { handler, handler2, data };
+    const { dateList, timeList } = CalendarGenerator();
+
+    return { handler, handler2, dateList, timeList, print };
   },
 };
 </script>
