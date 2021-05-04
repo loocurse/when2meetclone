@@ -52,7 +52,6 @@ function getHours(startTime, endTime) {
 	return timeArray;
 }
 
-// TODO store the data as an array of an array, where the first array indicates the dates, and the next array indicates teh time]
 const CalendarGenerator = () => {
   // input: timeStart, timeEnd, dayStart, dayEnd (inclusive)
 	var dateList = [];
@@ -67,8 +66,8 @@ const CalendarGenerator = () => {
   dateList = getDates(startDate, endDate);
 
   // Adding time
-  var startTime = parseTime("9am");
-  const endTime = parseTime("5pm");
+  var startTime = parseTime(timeStart);
+  const endTime = parseTime(timeEnd);
 	timeList = getHours(startTime, endTime);
 	return {dateList, timeList}
 };
