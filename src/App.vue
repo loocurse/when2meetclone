@@ -6,4 +6,10 @@
   <router-view />
 </template>
 
-<style></style>
+<style>
+html,
+body {
+  height: 100%;
+  font-family: Arial;
+}
+</style>

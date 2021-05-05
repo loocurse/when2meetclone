@@ -1,26 +1,35 @@
 <template>
   <div class="calendar">
-    <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
-      <div
-        class="hour"
-        v-for="(hour, index) in timeList"
-        :key="`${index}${hour}`"
-        @mousedown="handler"
-        @mousemove.prevent="handler2"
-        :id="`${day.toDateString()} ${hour.toTimeString()}`"
-      ></div>
+    <div class="timelabels">
+      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
     </div>
-    <button @click="print">Click me</button>
+    <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
+      <HourBox
+        :day="day"
+        :timeList="timeList"
+        :idx="idx"
+        :timeSelected="timeSelected"
+        @addEvent="addEvent"
+        @removeEvent="removeEvent"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import CalendarGenerator from "@/utils/CalendarGenerator";
+import HourBox from "./HourBox.vue";
 
 export default {
+  components: { HourBox },
   setup() {
-    let setting = true;
     let timeSelected = [];
+    const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
+      "9am",
+      "5pm",
+      "2020-03-20",
+      "2020-03-27"
+    );
 
     const addEvent = (event) => {
       event.target.classList.add("selected");
@@ -36,29 +45,15 @@ export default {
       });
     };
 
-    const handler = (event) => {
-      if (event.target.classList.value.includes("selected")) {
-        setting = false;
-        removeEvent(event);
-      } else {
-        setting = true;
-        addEvent(event);
-      }
+    return {
+      addEvent,
+      removeEvent,
+      dateList,
+      timeList,
+      dateLabels,
+      timeLabels,
+      timeSelected,
     };
-
-    const handler2 = (event) => {
-      let mouseClickedDown = event.buttons === 1;
-      if (mouseClickedDown) {
-        setting ? addEvent(event) : removeEvent(event);
-      }
-    };
-    const print = () => {
-      console.log(timeSelected);
-    };
-
-    const { dateList, timeList } = CalendarGenerator();
-
-    return { handler, handler2, dateList, timeList, print };
   },
 };
 </script>
@@ -69,6 +64,7 @@ export default {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+  height: 300px;
 }
 
 .label::before {
@@ -78,17 +74,19 @@ export default {
   top: -12.5px;
 }
 
-.hour {
-  width: 50px;
-  height: 20px;
-  border: solid 1px black;
+.timelabels {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  margin-right: 0.5rem;
+  font-size: 0.6rem;
+  text-align: right;
+  position: relative;
+  top: -5px;
 }
 
 .hour-label {
   margin: 0px 5px;
-}
-
-.selected {
-  background-color: rgb(67, 163, 67);
 }
 </style>

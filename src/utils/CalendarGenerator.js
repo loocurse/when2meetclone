@@ -12,7 +12,7 @@ function parseTime(t) {
 function formatAMPM(date) {
   var hours = date.getHours();
   var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? "pm" : "am";
+  var ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -52,14 +52,12 @@ function getHours(startTime, endTime) {
 	return timeArray;
 }
 
-const CalendarGenerator = () => {
-  // input: timeStart, timeEnd, dayStart, dayEnd (inclusive)
+const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
+  // TODO add input validation
 	var dateList = [];
   var timeList = [];
-  let timeStart = "9am";
-  let timeEnd = "5pm";
-  let dayStart = "2020-03-20".split("-");
-  let dayEnd = "2020-03-27".split("-");
+  dayStart = dayStart.split("-");
+  dayEnd = dayEnd.split("-");
   var startDate = new Date(dayStart[0], dayStart[1] - 1, dayStart[2]);
   var endDate = new Date(dayEnd[0], dayEnd[1] - 1, dayEnd[2]);
 
@@ -69,7 +67,17 @@ const CalendarGenerator = () => {
   var startTime = parseTime(timeStart);
   const endTime = parseTime(timeEnd);
 	timeList = getHours(startTime, endTime);
-	return {dateList, timeList}
+
+	let timeLabels = timeList.map((time) => {
+		return formatAMPM(time)
+	})
+
+	let dateLabels = dateList.map(date => {
+		return Intl.DateTimeFormat('en-US', { weekday: 'short'}).format(date)
+	})
+
+
+	return {dateList, timeList, dateLabels, timeLabels}
 };
 
 export default CalendarGenerator;
