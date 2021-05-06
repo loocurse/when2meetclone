@@ -24,49 +24,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
 import HourBox from "./HourBox.vue";
 
-export default {
-  components: { HourBox },
-  setup() {
-    let timeSelected = [];
-    const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
-      "9am",
-      "5pm",
-      "2020-03-20",
-      "2020-04-27"
-    );
+let timeSelected = [];
+const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
+  "9am",
+  "5pm",
+  "2020-03-20",
+  "2020-03-27"
+);
 
-    const addEvent = (event) => {
-      event.target.classList.add("selected");
-      if (timeSelected.indexOf(event.target.id) === -1) {
-        timeSelected.push(event.target.id);
-      }
-    };
-
-    const removeEvent = (event) => {
-      event.target.classList.remove("selected");
-      timeSelected = timeSelected.filter((val) => {
-        return val !== event.target.id;
-      });
-    };
-
-    const month = monthArray();
-
-    return {
-      month,
-      addEvent,
-      removeEvent,
-      dateList,
-      timeList,
-      dateLabels,
-      timeLabels,
-      timeSelected,
-    };
-  },
+const addEvent = (event) => {
+  event.target.classList.add("selected");
+  if (timeSelected.indexOf(event.target.id) === -1) {
+    timeSelected.push(event.target.id);
+  }
 };
+
+const removeEvent = (event) => {
+  event.target.classList.remove("selected");
+  timeSelected = timeSelected.filter((val) => {
+    return val !== event.target.id;
+  });
+};
+
+const month = monthArray();
 </script>
 
 <style scoped>
@@ -76,10 +60,9 @@ export default {
 }
 .calendar {
   display: flex;
-  width: 50%;
   margin-left: auto;
   margin-right: auto;
-  height: 300px;
+  height: 100%;
   margin-top: 35px;
   overflow-x: scroll;
   overflow-y: visible;
