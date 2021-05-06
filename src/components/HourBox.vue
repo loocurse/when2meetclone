@@ -2,7 +2,6 @@
   <div
     class="hour"
     :class="idx === 0 ? 'first' : ''"
-    :style="{ height: 100 / timeList.length + '%' }"
     v-for="(hour, index) in timeList"
     :key="`${index}${hour}`"
     @mousedown="clickHandler"
@@ -40,15 +39,15 @@ export default {
 
 <style scoped>
 .hour {
-  width: 50px;
-  /*height: 10%;*/
+  width: 44px;
+  height: 36px;
   border: solid 0.1px black;
   background-color: rgb(250, 223, 223);
   border-top: none;
   border-left: none;
 }
 
-.day .hour:first-child {
+.day .hour:nth-child(2) {
   border-top: solid 0.1px black;
 }
 

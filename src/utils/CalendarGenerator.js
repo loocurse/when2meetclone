@@ -1,5 +1,20 @@
-/* eslint-disable */
-import * as moment from "moment/moment";
+const monthArray = () => {
+  let month = new Array();
+  month[0] = "Jan";
+  month[1] = "Feb";
+  month[2] = "Mar";
+  month[3] = "Apr";
+  month[4] = "May";
+  month[5] = "Jun";
+  month[6] = "Jul";
+  month[7] = "Aug";
+  month[8] = "Sep";
+  month[9] = "Oct";
+  month[10] = "Nov";
+  month[11] = "Dec";
+  return month;
+};
+
 function parseTime(t) {
   var d = new Date();
   var time = t.match(/(\d+)(?::(\d\d))?\s*(p?)/);
@@ -21,40 +36,40 @@ function formatAMPM(date) {
 }
 
 Date.prototype.addDays = function (days) {
-	var date = new Date(this.valueOf());
-	date.setDate(date.getDate() + days);
-	return date;
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
 };
 
 Date.prototype.addHours = function (hours) {
-	var date = new Date(this.valueOf());
-	date.setHours(date.getHours() + hours);
-	return date;
+  var date = new Date(this.valueOf());
+  date.setHours(date.getHours() + hours);
+  return date;
 };
 
 function getDates(startDate, stopDate) {
-	var dateArray = new Array();
-	var currentDate = startDate;
-	while (currentDate <= stopDate) {
-		dateArray.push(new Date(currentDate));
-		currentDate = currentDate.addDays(1);
-	}
-	return dateArray;
+  var dateArray = new Array();
+  var currentDate = startDate;
+  while (currentDate <= stopDate) {
+    dateArray.push(new Date(currentDate));
+    currentDate = currentDate.addDays(1);
+  }
+  return dateArray;
 }
 
 function getHours(startTime, endTime) {
-	var timeArray = new Array();
-	var currentTime = startTime;
-	while (currentTime <= endTime) {
-		timeArray.push(new Date(currentTime));
-		currentTime = currentTime.addHours(1);
-	}
-	return timeArray;
+  var timeArray = new Array();
+  var currentTime = startTime;
+  while (currentTime <= endTime) {
+    timeArray.push(new Date(currentTime));
+    currentTime = currentTime.addHours(1);
+  }
+  return timeArray;
 }
 
 const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
   // TODO add input validation
-	var dateList = [];
+  var dateList = [];
   var timeList = [];
   dayStart = dayStart.split("-");
   dayEnd = dayEnd.split("-");
@@ -66,18 +81,17 @@ const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
   // Adding time
   var startTime = parseTime(timeStart);
   const endTime = parseTime(timeEnd);
-	timeList = getHours(startTime, endTime);
+  timeList = getHours(startTime, endTime);
 
-	let timeLabels = timeList.map((time) => {
-		return formatAMPM(time)
-	})
+  let timeLabels = timeList.map((time) => {
+    return formatAMPM(time);
+  });
 
-	let dateLabels = dateList.map(date => {
-		return Intl.DateTimeFormat('en-US', { weekday: 'short'}).format(date)
-	})
+  let dateLabels = dateList.map((date) => {
+    return Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date);
+  });
 
-
-	return {dateList, timeList, dateLabels, timeLabels}
+  return { dateList, timeList, dateLabels, timeLabels };
 };
 
-export default CalendarGenerator;
+export { CalendarGenerator, monthArray };
