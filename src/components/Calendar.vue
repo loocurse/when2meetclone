@@ -1,23 +1,31 @@
 <template>
-  <div class="calendar">
-    <div class="timelabels">
-      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
-    </div>
-    <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
-      <HourBox
-        :day="day"
-        :timeList="timeList"
-        :idx="idx"
-        :timeSelected="timeSelected"
-        @addEvent="addEvent"
-        @removeEvent="removeEvent"
-      />
+  <div class="outer">
+    <div class="calendar">
+      <div class="timelabels">
+        <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
+      </div>
+      <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
+        <div class="daylabel">
+          <span>{{ month[day.getMonth()] }} {{ day.getDate() }}</span>
+          <p>
+            {{ Intl.DateTimeFormat("en-US", { weekday: "short" }).format(day) }}
+          </p>
+        </div>
+        <HourBox
+          :day="day"
+          :timeList="timeList"
+          :idx="idx"
+          :timeSelected="timeSelected"
+          @addEvent="addEvent"
+          @removeEvent="removeEvent"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import CalendarGenerator from "@/utils/CalendarGenerator";
+import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
 import HourBox from "./HourBox.vue";
 
 export default {
@@ -28,7 +36,7 @@ export default {
       "9am",
       "5pm",
       "2020-03-20",
-      "2020-03-27"
+      "2020-04-27"
     );
 
     const addEvent = (event) => {
@@ -45,7 +53,10 @@ export default {
       });
     };
 
+    const month = monthArray();
+
     return {
+      month,
       addEvent,
       removeEvent,
       dateList,
@@ -59,19 +70,19 @@ export default {
 </script>
 
 <style scoped>
+.outer {
+  position: relative;
+  /*overflow: scroll;*/
+}
 .calendar {
   display: flex;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
   height: 300px;
-}
-
-.label::before {
-  content: "9am";
-  position: relative;
-  left: -50px;
-  top: -12.5px;
+  margin-top: 35px;
+  overflow-x: scroll;
+  overflow-y: visible;
 }
 
 .timelabels {
@@ -80,13 +91,35 @@ export default {
   height: 100%;
   justify-content: space-between;
   margin-right: 0.5rem;
-  font-size: 0.6rem;
+  font-size: 10px;
   text-align: right;
   position: relative;
-  top: -5px;
+  top: 30px;
+  white-space: nowrap;
 }
 
 .hour-label {
   margin: 0px 5px;
+  display: inline-block;
+  width: 50px;
+}
+
+.daylabel {
+  top: -35px;
+  font-size: 10px;
+  text-align: center;
+  align-self: center;
+  display: inline-block;
+  white-space: normal;
+}
+
+.daylabel span {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.daylabel p {
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
 }
 </style>
