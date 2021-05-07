@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 export default {
   data() {
     return {
@@ -58,8 +59,9 @@ export default {
       // convert datetime
 
       this.clearForm();
-			// redirect user
-			// backend endpoint to create new event and get event id
+      // redirect user
+      // backend endpoint to create new event and get event id
+      this.$router.push({ name: "event", params: { id: 100 } });
     },
     clearForm() {
       this.name = "";
