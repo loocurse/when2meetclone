@@ -1,9 +1,9 @@
 <template>
   <div class="outer">
+    <div class="timelabels">
+      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
+    </div>
     <div class="calendar">
-      <div class="timelabels">
-        <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
-      </div>
       <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
         <div class="daylabel">
           <span>{{ month[day.getMonth()] }} {{ day.getDate() }}</span>
@@ -24,48 +24,63 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
 import HourBox from "./HourBox.vue";
 
-let timeSelected = [];
-const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
-  "9am",
-  "5pm",
-  "2020-03-20",
-  "2020-03-27"
-);
+export default {
+  components: { HourBox },
+  setup() {
+    let timeSelected = [];
+    const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
+      "9am",
+      "5pm",
+      "2020-03-20",
+      "2020-03-27"
+    );
 
-const addEvent = (event) => {
-  event.target.classList.add("selected");
-  if (timeSelected.indexOf(event.target.id) === -1) {
-    timeSelected.push(event.target.id);
-  }
+    const addEvent = (event) => {
+      event.target.classList.add("selected");
+      if (timeSelected.indexOf(event.target.id) === -1) {
+        timeSelected.push(event.target.id);
+      }
+    };
+
+    const removeEvent = (event) => {
+      event.target.classList.remove("selected");
+      timeSelected = timeSelected.filter((val) => {
+        return val !== event.target.id;
+      });
+    };
+
+    const month = monthArray();
+    return {
+      dateList,
+      timeList,
+      dateLabels,
+      timeLabels,
+      addEvent,
+      removeEvent,
+      month,
+    };
+  },
 };
-
-const removeEvent = (event) => {
-  event.target.classList.remove("selected");
-  timeSelected = timeSelected.filter((val) => {
-    return val !== event.target.id;
-  });
-};
-
-const month = monthArray();
 </script>
 
 <style scoped>
 .outer {
   position: relative;
-  /*overflow: scroll;*/
 }
+
 .calendar {
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
+  border-radius: 20px;
+  padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  height: 100%;
   margin-top: 35px;
-  overflow-x: scroll;
-  overflow-y: visible;
+  border: 1px solid black;
 }
 
 .timelabels {
@@ -86,7 +101,9 @@ const month = monthArray();
   display: inline-block;
   width: 50px;
 }
-
+.day {
+  text-align: center;
+}
 .daylabel {
   top: -35px;
   font-size: 10px;
@@ -94,6 +111,7 @@ const month = monthArray();
   align-self: center;
   display: inline-block;
   white-space: normal;
+  width: 100%;
 }
 
 .daylabel span {

@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .hour {
-  width: 44px;
+  width: 80px;
   height: 36px;
   border: solid 0.1px black;
   background-color: rgb(250, 223, 223);

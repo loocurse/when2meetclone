@@ -3,7 +3,11 @@
     <form>
       <div class="row">
         <label for="event-name">Event Name</label>
-        <input type="text" v-model="name" />
+        <input
+          type="text"
+          v-model="name"
+          placeholder="Prototype 3 feedback discussion"
+        />
       </div>
       <div class="row">
         <label for="sdate">Start date</label>
@@ -114,12 +118,23 @@ export default {
 }
 
 form {
+  input {
+    width: 200px;
+    padding: 10px 10px;
+    font-family: "Poppins", sans-serif;
+  }
   width: 80%;
+  input[type="text"] {
+    &::placeholder {
+      color: rgb(194, 194, 194);
+    }
+  }
 }
 
 .row {
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
+  align-items: center;
 }
 </style>
