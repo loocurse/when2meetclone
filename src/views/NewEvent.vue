@@ -1,27 +1,29 @@
 <template>
-  <form>
-    <div class="row">
-      <label for="event-name">Event Name</label>
-      <input type="text" v-model="name" />
-    </div>
-    <div class="row">
-      <label for="sdate">Start date</label>
-      <input type="date" name="sdate" id="" v-model="sdate" />
-    </div>
-    <div class="row">
-      <label for="edate">End date</label>
-      <input type="date" name="edate" id="" v-model="edate" />
-    </div>
-    <div class="row">
-      <label for="stime">Start Time</label>
-      <input type="time" name="stime" id="" v-model="stime" />
-    </div>
-    <div class="row">
-      <label for="stime">End Time</label>
-      <input type="time" name="etime" id="" v-model="etime" />
-    </div>
-  </form>
-  <button @click="submitHandler">Submit</button>
+  <div class="container">
+    <form>
+      <div class="row">
+        <label for="event-name">Event Name</label>
+        <input type="text" v-model="name" />
+      </div>
+      <div class="row">
+        <label for="sdate">Start date</label>
+        <input type="date" name="sdate" id="" v-model="sdate" />
+      </div>
+      <div class="row">
+        <label for="edate">End date</label>
+        <input type="date" name="edate" id="" v-model="edate" />
+      </div>
+      <div class="row">
+        <label for="stime">Start Time</label>
+        <input type="time" name="stime" id="" v-model="stime" />
+      </div>
+      <div class="row">
+        <label for="stime">End Time</label>
+        <input type="time" name="etime" id="" v-model="etime" />
+      </div>
+    </form>
+    <button @click="submitHandler">Submit</button>
+  </div>
 </template>
 
 <script>
@@ -87,4 +89,37 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  font-size: 24px;
+  width: 50%;
+  color: white;
+  margin: 30px auto;
+  background-color: #247ba0;
+  padding: 50px 100px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    padding: 10px 30px;
+    margin-top: 20px;
+    color: #494949;
+    font-size: 20px;
+    border-radius: 30px;
+    border: 0;
+    background-color: #f6c467;
+    cursor: pointer;
+  }
+}
+
+form {
+  width: 80%;
+}
+
+.row {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+</style>
