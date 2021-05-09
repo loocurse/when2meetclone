@@ -6,9 +6,9 @@
     <div class="calendar">
       <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
         <div class="daylabel">
-          <span>{{ month[day.getMonth()] }} {{ day.getDate() }}</span>
+          <span>{{ day.getDate() }}</span>
           <p>
-            {{ Intl.DateTimeFormat("en-US", { weekday: "short" }).format(day) }}
+            {{ Intl.DateTimeFormat("en-US", { weekday: "long" }).format(day) }}
           </p>
         </div>
         <HourBox
@@ -36,7 +36,7 @@ export default {
       "9am",
       "5pm",
       "2020-03-20",
-      "2020-03-27"
+      "2020-03-26"
     );
 
     const addEvent = (event) => {
@@ -67,32 +67,33 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .outer {
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .calendar {
   display: inline-flex;
   justify-content: center;
   border-radius: 20px;
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 35px;
-  border: 1px solid black;
+  overflow: hidden;
+  background-color: #f7f7f7;
 }
 
 .timelabels {
+  color: #686868;
+  padding-top: 70px;
+  padding-bottom: 25px;
   display: flex;
+  align-self: stretch;
   flex-direction: column;
-  height: 100%;
   justify-content: space-between;
-  margin-right: 0.5rem;
-  font-size: 10px;
+  margin-right: 10px;
+  font-size: 12px;
   text-align: right;
-  position: relative;
-  top: 30px;
   white-space: nowrap;
 }
 
@@ -105,6 +106,7 @@ export default {
   text-align: center;
 }
 .daylabel {
+  color: #686868;
   top: -35px;
   font-size: 10px;
   text-align: center;
@@ -112,15 +114,18 @@ export default {
   display: inline-block;
   white-space: normal;
   width: 100%;
-}
-
-.daylabel span {
-  overflow-x: scroll;
-  white-space: nowrap;
-}
-.daylabel p {
-  font-size: 16px;
-  padding: 0;
-  margin: 0;
+  margin: 10px 0;
+  span {
+    overflow-x: scroll;
+    white-space: nowrap;
+    font-size: 20px;
+  }
+  p {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    text-transform: uppercase;
+  }
 }
 </style>

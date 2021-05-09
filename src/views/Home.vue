@@ -10,7 +10,6 @@
       src="https://assets6.lottiefiles.com/packages/lf20_pyawb2b1.json"
       background="transparent"
       speed="1"
-      style="width: 700px; height: 700px"
       loop
       autoplay
     ></lottie-player>
@@ -59,6 +58,8 @@ export default {
     left: 100%;
     top: 50%;
     transform: translate(-100%, -50%);
+    width: 600px;
+    height: 600px;
   }
 }
 </style>

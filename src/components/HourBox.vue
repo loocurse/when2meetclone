@@ -37,25 +37,27 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .hour {
-  width: 80px;
+  width: 100px;
   height: 36px;
-  border: solid 0.1px black;
-  background-color: rgb(250, 223, 223);
+  border: solid 0.1px rgb(230, 230, 230);
+  background-color: white;
   border-top: none;
   border-left: none;
-}
-
-.day .hour:nth-child(2) {
-  border-top: solid 0.1px black;
+  &:nth-child(2) {
+    border-top: solid 0.1px rgb(230, 230, 230);
+  }
 }
 
 .first {
-  border-left: solid 0.1px black;
+  border-left: solid 0.1px rgb(230, 230, 230) !important;
 }
 
 .selected {
-  background-color: rgb(67, 163, 67);
+  background-color: #33c88e90;
+  border: solid 0.1px #33c88e90;
+  border-top: none;
+  border-left: none;
 }
 </style>
