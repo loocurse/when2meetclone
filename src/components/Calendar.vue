@@ -36,7 +36,7 @@ export default {
       "9am",
       "5pm",
       "2020-03-20",
-      "2020-03-26"
+      "2020-03-24"
     );
 
     const addEvent = (event) => {

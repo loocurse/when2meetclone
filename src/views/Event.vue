@@ -10,17 +10,26 @@
 
   <div class="content">
     <DisplayCalendar />
+    <div class="right-information">
+      <Participants />
+      <EventDetails />
+    </div>
   </div>
 </template>
 
 <script>
 import DisplayCalendar from "../components/DisplayCalendar.vue";
+import Participants from "../components/Participants";
+import EventDetails from "../components/EventDetails";
 import { useRoute } from "vue-router";
 import SignIn from "../components/SignIn.vue";
 import { ref } from "@vue/reactivity";
+
 export default {
   components: {
     DisplayCalendar,
+    Participants,
+    EventDetails,
   },
   setup() {
     const route = useRoute();
@@ -66,5 +75,9 @@ export default {
       cursor: pointer;
     }
   }
+}
+.content {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
