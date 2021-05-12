@@ -2,17 +2,17 @@
   <div
     class="hour"
     :class="idx === 0 ? 'first' : ''"
-    v-for="(hour, index) in timeList"
-    :key="`${index}${hour}`"
+    v-for="hour in day"
+    :key="`${hour}`"
     @mousedown="clickHandler"
     @mousemove.prevent="dragHandler"
-    :id="`${day.toDateString()} ${hour.toTimeString()}`"
+    :id="hour"
   ></div>
 </template>
 
 <script>
 export default {
-  props: ["day", "hour", "timeList", "idx", "timeSelected"],
+  props: ["day", "hour", "idx"],
   setup(props, { emit }) {
     let setting = true;
 
@@ -45,9 +45,9 @@ export default {
   background-color: white;
   border-top: none;
   border-left: none;
-  &:nth-child(2) {
+  /*&:nth-child(2) {
     border-top: solid 0.1px rgb(230, 230, 230);
-  }
+  }*/
 }
 
 .first {

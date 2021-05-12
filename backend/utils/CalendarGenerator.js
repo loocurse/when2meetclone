@@ -1,18 +1,18 @@
-const monthArray = () => {
-  let month = new Array();
-  month[0] = "Jan";
-  month[1] = "Feb";
-  month[2] = "Mar";
-  month[3] = "Apr";
-  month[4] = "May";
-  month[5] = "Jun";
-  month[6] = "Jul";
-  month[7] = "Aug";
-  month[8] = "Sep";
-  month[9] = "Oct";
-  month[10] = "Nov";
-  month[11] = "Dec";
-  return month;
+const month = (monthNumber) => {
+  let monthNames = new Array();
+  monthNames[0] = "Jan";
+  monthNames[1] = "Feb";
+  monthNames[2] = "Mar";
+  monthNames[3] = "Apr";
+  monthNames[4] = "May";
+  monthNames[5] = "Jun";
+  monthNames[6] = "Jul";
+  monthNames[7] = "Aug";
+  monthNames[8] = "Sep";
+  monthNames[9] = "Oct";
+  monthNames[10] = "Nov";
+  monthNames[11] = "Dec";
+  return monthNames[monthNumber];
 };
 
 function parseTime(t) {
@@ -91,7 +91,6 @@ const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
     return Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date);
   });
 
-  const month = monthArray();
 
   let labelTop = `${startDate.getDate()} ${
     month[startDate.getMonth() + 1]
@@ -100,4 +99,4 @@ const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
   return { dateList, timeList, dateLabels, timeLabels, labelTop };
 };
 
-export { CalendarGenerator, monthArray };
+export { CalendarGenerator, month };
