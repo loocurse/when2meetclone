@@ -12,6 +12,7 @@
         <HourBox
           :day="day"
           :idx="idx"
+          :Data="Data"
           @addEvent="addEvent"
           @removeEvent="removeEvent"
         />

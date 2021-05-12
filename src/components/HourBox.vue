@@ -1,6 +1,7 @@
 <template>
   <div
     class="hour"
+    :style="styleBinding(Data[hour].length)"
     :class="idx === 0 ? 'first' : ''"
     v-for="hour in day"
     :key="`${hour}`"
@@ -12,27 +13,50 @@
 
 <script>
 export default {
-  props: ["day", "hour", "idx"],
-  setup(props, { emit }) {
+  props: ["day", "idx", "Data"],
+  setup(props, context) {
     let setting = true;
 
     const clickHandler = (event) => {
       if (event.target.classList.value.includes("selected")) {
         setting = false;
-        emit("removeEvent", event);
+        context.emit("removeEvent", event);
       } else {
         setting = true;
-        emit("addEvent", event);
+        context.emit("addEvent", event);
       }
     };
 
     const dragHandler = (event) => {
       let mouseClickedDown = event.buttons === 1;
       if (mouseClickedDown) {
-        setting ? emit("addEvent", event) : emit("removeEvent", event);
+        setting
+          ? context.emit("addEvent", event)
+          : context.emit("removeEvent", event);
       }
     };
-    return { dragHandler, clickHandler };
+
+    const styleBinding = (degree) => {
+      if (degree === 1) {
+        return {
+          "background-color": `hsl(157, 59%, 90%)`,
+          border: "solid 0.1px hsl(157, 59%, 60%)",
+          "border-top": "none",
+          "border-left": "none",
+        };
+      } else if (degree === 2) {
+        return {
+          "background-color": `hsl(157, 59%, 80%)`,
+          border: "solid 0.1px hsl(157, 59%, 60%)",
+          "border-top": "none",
+          "border-left": "none",
+        };
+      } else {
+        return;
+      }
+    };
+
+    return { dragHandler, clickHandler, styleBinding };
   },
 };
 </script>
@@ -55,8 +79,8 @@ export default {
 }
 
 .selected {
-  background-color: #33c88e90;
-  border: solid 0.1px #33c88e90;
+  background-color: hsl(157, 59%, 50%);
+  border: solid 0.1px hsl(157, 59%, 50%);
   border-top: none;
   border-left: none;
 }
