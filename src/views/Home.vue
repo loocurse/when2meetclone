@@ -34,7 +34,7 @@ export default {
     display: flex;
     flex-direction: column;
     span {
-      font-size: 80px;
+      font-size: 70px;
       font-weight: bold;
       line-height: 1.2;
     }
@@ -58,8 +58,8 @@ export default {
     left: 100%;
     top: 50%;
     transform: translate(-100%, -50%);
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
   }
 }
 </style>

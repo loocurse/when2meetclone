@@ -30,15 +30,24 @@ import HourBox from "./HourBox.vue";
 
 export default {
   components: { HourBox },
-  setup() {
+  setup(props, { emit }) {
     let timeSelected = [];
-    const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
-      "9am",
-      "5pm",
-      "2020-03-20",
-      "2020-03-24"
-    );
+    const {
+      dateList,
+      timeList,
+      dateLabels,
+      timeLabels,
+      labelTop,
+    } = CalendarGenerator("9am", "5pm", "2020-03-20", "2020-03-25");
 
+    emit("eventRangeHandler", labelTop); // emit information up to indicate label's date range
+
+    const Data = [
+      [1618884000, 1618887600, 1618887600],
+      [1618884000, 1618887600],
+    ];
+
+    // when users click and drag, and there is no date already there, this function runs
     const addEvent = (event) => {
       event.target.classList.add("selected");
       if (timeSelected.indexOf(event.target.id) === -1) {
@@ -46,6 +55,7 @@ export default {
       }
     };
 
+    // when users click and drag, and there is already an input at this div, this function runs
     const removeEvent = (event) => {
       event.target.classList.remove("selected");
       timeSelected = timeSelected.filter((val) => {

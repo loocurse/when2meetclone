@@ -91,7 +91,13 @@ const CalendarGenerator = (timeStart, timeEnd, dayStart, dayEnd) => {
     return Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date);
   });
 
-  return { dateList, timeList, dateLabels, timeLabels };
+  const month = monthArray();
+
+  let labelTop = `${startDate.getDate()} ${
+    month[startDate.getMonth() + 1]
+  } - ${endDate.getDate()} ${month[endDate.getMonth() + 1]}`;
+
+  return { dateList, timeList, dateLabels, timeLabels, labelTop };
 };
 
 export { CalendarGenerator, monthArray };

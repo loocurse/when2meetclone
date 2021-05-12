@@ -3,13 +3,13 @@
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
       <div class="left"><i class="fas fa-angle-left"></i></div>
-      <p>15 May - 23 May</p>
+      <p>{{ eventRange }}</p>
       <div class="right"><i class="fas fa-angle-right"></i></div>
     </div>
   </div>
 
   <div class="content">
-    <DisplayCalendar />
+    <DisplayCalendar @eventRangeHandler="eventRangeHandler" />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -34,6 +34,12 @@ export default {
   setup() {
     const route = useRoute();
 
+    const eventRange = ref("");
+
+    const eventRangeHandler = (eventrange) => {
+      eventRange.value = eventrange;
+    };
+
     const getEventName = (id) => {
       return "Project Meeting";
     };
@@ -45,7 +51,7 @@ export default {
     const signedInBool = ref(false);
     const eventName = getEventName(route.params.id);
 
-    return { eventName, signIn };
+    return { eventName, signIn, eventRange, eventRangeHandler };
   },
 };
 </script>
