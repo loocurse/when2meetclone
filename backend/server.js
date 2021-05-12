@@ -39,7 +39,7 @@ app.get("/events/:id", function (req, res) {
 
 app.post("/events/add", function (req, res) {
   //Add a new user
-  console.log(req);
+  console.log(req.body);
   const event_name = req.body.event_name;
   const start_date = req.body.start_date;
   const end_date = req.body.end_date;

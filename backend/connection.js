@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-URI =
+const URI =
   "mongodb+srv://kehvinbehvin:when2meetclone@cluster0.0lnwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 const connectDB = async () => {

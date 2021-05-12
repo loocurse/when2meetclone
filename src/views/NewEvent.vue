@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
 export default {
   data() {
     return {
@@ -60,9 +59,29 @@ export default {
     )}`;
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       // TODO form validation 1. ensure date and time are far away 2. ensure event name is not empty
       // convert datetime
+
+      const eventDetails = {
+        event_name: this.name,
+        start_date: this.sdate,
+        end_date: this.edate,
+        start_time: this.stime,
+        end_time: this.etime,
+      };
+      console.table(eventDetails);
+      let response = await fetch("http://localhost:3000/events/add", {
+        mode: "no-cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(eventDetails),
+      });
+
+      let result = await response.json();
+      console.log(result);
 
       this.clearForm();
       // redirect user
