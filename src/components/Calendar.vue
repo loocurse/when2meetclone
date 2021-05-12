@@ -1,5 +1,6 @@
 <template>
   <div class="outer">
+<<<<<<< HEAD
     <div class="calendar">
       <div class="timelabels">
         <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
@@ -9,6 +10,17 @@
           <span>{{ month[day.getMonth()] }} {{ day.getDate() }}</span>
           <p>
             {{ Intl.DateTimeFormat("en-US", { weekday: "short" }).format(day) }}
+=======
+    <div class="timelabels">
+      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
+    </div>
+    <div class="calendar">
+      <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
+        <div class="daylabel">
+          <span>{{ day.getDate() }}</span>
+          <p>
+            {{ Intl.DateTimeFormat("en-US", { weekday: "long" }).format(day) }}
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
           </p>
         </div>
         <HourBox
@@ -24,6 +36,7 @@
   </div>
 </template>
 
+<<<<<<< HEAD
 <script setup>
 import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
 import HourBox from "./HourBox.vue";
@@ -78,6 +91,78 @@ const month = monthArray();
   text-align: right;
   position: relative;
   top: 30px;
+=======
+<script>
+import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
+import HourBox from "./HourBox.vue";
+
+export default {
+  components: { HourBox },
+  setup() {
+    let timeSelected = [];
+    const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
+      "9am",
+      "5pm",
+      "2020-03-20",
+      "2020-03-24"
+    );
+
+    const addEvent = (event) => {
+      event.target.classList.add("selected");
+      if (timeSelected.indexOf(event.target.id) === -1) {
+        timeSelected.push(event.target.id);
+      }
+    };
+
+    const removeEvent = (event) => {
+      event.target.classList.remove("selected");
+      timeSelected = timeSelected.filter((val) => {
+        return val !== event.target.id;
+      });
+    };
+
+    const month = monthArray();
+    return {
+      dateList,
+      timeList,
+      dateLabels,
+      timeLabels,
+      addEvent,
+      removeEvent,
+      month,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.outer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.calendar {
+  display: inline-flex;
+  justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #f7f7f7;
+}
+
+.timelabels {
+  color: #686868;
+  padding-top: 70px;
+  padding-bottom: 25px;
+  display: flex;
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 10px;
+  font-size: 12px;
+  text-align: right;
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   white-space: nowrap;
 }
 
@@ -86,14 +171,23 @@ const month = monthArray();
   display: inline-block;
   width: 50px;
 }
+<<<<<<< HEAD
 
 .daylabel {
+=======
+.day {
+  text-align: center;
+}
+.daylabel {
+  color: #686868;
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   top: -35px;
   font-size: 10px;
   text-align: center;
   align-self: center;
   display: inline-block;
   white-space: normal;
+<<<<<<< HEAD
 }
 
 .daylabel span {
@@ -104,5 +198,21 @@ const month = monthArray();
   font-size: 16px;
   padding: 0;
   margin: 0;
+=======
+  width: 100%;
+  margin: 10px 0;
+  span {
+    overflow-x: scroll;
+    white-space: nowrap;
+    font-size: 20px;
+  }
+  p {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    text-transform: uppercase;
+  }
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 }
 </style>

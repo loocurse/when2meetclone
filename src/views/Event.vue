@@ -1,5 +1,6 @@
 <template>
   <div class="event-details">
+<<<<<<< HEAD
     <h1>{{ id }}</h1>
     <p>
       To invite people to this event, you can <a>email them</a>, send them a
@@ -17,11 +18,28 @@
   <div class="content">
     <SignIn @signIn="signIn" />
     <DisplayCalendar />
+=======
+    <h1>{{ eventName }}</h1>
+    <div class="date-chooser">
+      <div class="left"><i class="fas fa-angle-left"></i></div>
+      <p>15 May - 23 May</p>
+      <div class="right"><i class="fas fa-angle-right"></i></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <DisplayCalendar />
+    <div class="right-information">
+      <Participants />
+      <EventDetails />
+    </div>
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   </div>
 </template>
 
 <script>
 import DisplayCalendar from "../components/DisplayCalendar.vue";
+<<<<<<< HEAD
 import { useRoute } from "vue-router";
 import SignIn from "../components/SignIn.vue";
 import { ref } from "@vue/reactivity";
@@ -33,20 +51,47 @@ export default {
   setup() {
     const route = useRoute();
     const id = route.params.id;
+=======
+import Participants from "../components/Participants";
+import EventDetails from "../components/EventDetails";
+import { useRoute } from "vue-router";
+import SignIn from "../components/SignIn.vue";
+import { ref } from "@vue/reactivity";
+
+export default {
+  components: {
+    DisplayCalendar,
+    Participants,
+    EventDetails,
+  },
+  setup() {
+    const route = useRoute();
+
+    const getEventName = (id) => {
+      return "Project Meeting";
+    };
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 
     const signIn = ({ name, password }) => {
       console.log(name);
     };
 
     const signedInBool = ref(false);
+<<<<<<< HEAD
 
     return { id, signIn };
+=======
+    const eventName = getEventName(route.params.id);
+
+    return { eventName, signIn };
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .event-details {
+<<<<<<< HEAD
   padding: 20px;
   font-weight: 300;
   h1 {
@@ -78,5 +123,34 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+=======
+  margin-top: 20px;
+  margin-left: 40px;
+  display: flex;
+  align-items: center;
+  h1 {
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-right: 40px;
+  }
+  .date-chooser {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    color: rgb(99, 99, 99);
+    p {
+      padding: 0 20px;
+      font-size: 20px;
+    }
+    .left,
+    .right {
+      cursor: pointer;
+    }
+  }
+}
+.content {
+  display: flex;
+  justify-content: space-between;
+>>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 }
 </style>
