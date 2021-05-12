@@ -37,28 +37,6 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
-<style scoped>
-.hour {
-  width: 44px;
-  height: 36px;
-  border: solid 0.1px black;
-  background-color: rgb(250, 223, 223);
-  border-top: none;
-  border-left: none;
-}
-
-.day .hour:nth-child(2) {
-  border-top: solid 0.1px black;
-}
-
-.first {
-  border-left: solid 0.1px black;
-}
-
-.selected {
-  background-color: rgb(67, 163, 67);
-=======
 <style lang="scss" scoped>
 .hour {
   width: 100px;
@@ -81,6 +59,5 @@ export default {
   border: solid 0.1px #33c88e90;
   border-top: none;
   border-left: none;
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 }
 </style>

@@ -1,11 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div id="nav">
-    <router-link to="/">About When2meet</router-link>
-    <router-link :to="{ name: 'event', params: { id: 123 } }"
-      >Plan a New Event</router-link
-    >
-=======
   <div class="container">
     <div id="nav">
       <div class="first-nav">
@@ -18,7 +11,6 @@
       </div>
     </div>
     <router-view />
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   </div>
 </template>
 
@@ -30,28 +22,6 @@
 html,
 body {
   height: 100%;
-<<<<<<< HEAD
-  font-family: Arial;
-}
-
-#nav {
-  background-color: black;
-  color: #dedede;
-  height: 30px;
-  display: flex;
-  padding: 0 10px;
-  a {
-    text-decoration: none;
-    color: #dedede;
-    font-size: 16px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    &:hover {
-      background-color: #dedede;
-      color: black;
-=======
   font-family: "Poppins", sans-serif;
   background-color: #f6f7f9;
 }
@@ -99,7 +69,6 @@ body {
       border-radius: 30px;
       background-color: #f6c467;
       text-decoration: none;
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
     }
   }
 }

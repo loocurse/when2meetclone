@@ -1,16 +1,5 @@
 <template>
   <div class="outer">
-<<<<<<< HEAD
-    <div class="calendar">
-      <div class="timelabels">
-        <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
-      </div>
-      <div class="day" v-for="(day, idx) in dateList" :key="`${idx}${day}`">
-        <div class="daylabel">
-          <span>{{ month[day.getMonth()] }} {{ day.getDate() }}</span>
-          <p>
-            {{ Intl.DateTimeFormat("en-US", { weekday: "short" }).format(day) }}
-=======
     <div class="timelabels">
       <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
     </div>
@@ -20,7 +9,6 @@
           <span>{{ day.getDate() }}</span>
           <p>
             {{ Intl.DateTimeFormat("en-US", { weekday: "long" }).format(day) }}
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
           </p>
         </div>
         <HourBox
@@ -36,62 +24,6 @@
   </div>
 </template>
 
-<<<<<<< HEAD
-<script setup>
-import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
-import HourBox from "./HourBox.vue";
-
-let timeSelected = [];
-const { dateList, timeList, dateLabels, timeLabels } = CalendarGenerator(
-  "9am",
-  "5pm",
-  "2020-03-20",
-  "2020-03-27"
-);
-
-const addEvent = (event) => {
-  event.target.classList.add("selected");
-  if (timeSelected.indexOf(event.target.id) === -1) {
-    timeSelected.push(event.target.id);
-  }
-};
-
-const removeEvent = (event) => {
-  event.target.classList.remove("selected");
-  timeSelected = timeSelected.filter((val) => {
-    return val !== event.target.id;
-  });
-};
-
-const month = monthArray();
-</script>
-
-<style scoped>
-.outer {
-  position: relative;
-  /*overflow: scroll;*/
-}
-.calendar {
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-  margin-top: 35px;
-  overflow-x: scroll;
-  overflow-y: visible;
-}
-
-.timelabels {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  margin-right: 0.5rem;
-  font-size: 10px;
-  text-align: right;
-  position: relative;
-  top: 30px;
-=======
 <script>
 import { CalendarGenerator, monthArray } from "@/utils/CalendarGenerator";
 import HourBox from "./HourBox.vue";
@@ -162,7 +94,6 @@ export default {
   margin-right: 10px;
   font-size: 12px;
   text-align: right;
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   white-space: nowrap;
 }
 
@@ -171,34 +102,17 @@ export default {
   display: inline-block;
   width: 50px;
 }
-<<<<<<< HEAD
-
-.daylabel {
-=======
 .day {
   text-align: center;
 }
 .daylabel {
   color: #686868;
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   top: -35px;
   font-size: 10px;
   text-align: center;
   align-self: center;
   display: inline-block;
   white-space: normal;
-<<<<<<< HEAD
-}
-
-.daylabel span {
-  overflow-x: scroll;
-  white-space: nowrap;
-}
-.daylabel p {
-  font-size: 16px;
-  padding: 0;
-  margin: 0;
-=======
   width: 100%;
   margin: 10px 0;
   span {
@@ -213,6 +127,5 @@ export default {
     margin-top: 5px;
     text-transform: uppercase;
   }
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 }
 </style>
