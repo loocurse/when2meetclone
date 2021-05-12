@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-<<<<<<< HEAD
-    <img alt="Vue logo" src="../assets/logo.png" />
-=======
     <div class="information">
       <span>Bring your <br />team<br />together</span>
       <router-link :to="{ name: 'newevent' }">Get Started</router-link>
@@ -16,16 +13,10 @@
       loop
       autoplay
     ></lottie-player>
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-// @ is an alias to /src
-
-=======
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 export default {
   name: "Home",
   components: {},
@@ -43,7 +34,7 @@ export default {
     display: flex;
     flex-direction: column;
     span {
-      font-size: 80px;
+      font-size: 70px;
       font-weight: bold;
       line-height: 1.2;
     }
@@ -67,8 +58,8 @@ export default {
     left: 100%;
     top: 50%;
     transform: translate(-100%, -50%);
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
   }
 }
 </style>

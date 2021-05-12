@@ -2,17 +2,17 @@
   <div
     class="hour"
     :class="idx === 0 ? 'first' : ''"
-    v-for="(hour, index) in timeList"
-    :key="`${index}${hour}`"
+    v-for="hour in day"
+    :key="`${hour}`"
     @mousedown="clickHandler"
     @mousemove.prevent="dragHandler"
-    :id="`${day.toDateString()} ${hour.toTimeString()}`"
+    :id="hour"
   ></div>
 </template>
 
 <script>
 export default {
-  props: ["day", "hour", "timeList", "idx", "timeSelected"],
+  props: ["day", "hour", "idx"],
   setup(props, { emit }) {
     let setting = true;
 
@@ -37,28 +37,6 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
-<style scoped>
-.hour {
-  width: 44px;
-  height: 36px;
-  border: solid 0.1px black;
-  background-color: rgb(250, 223, 223);
-  border-top: none;
-  border-left: none;
-}
-
-.day .hour:nth-child(2) {
-  border-top: solid 0.1px black;
-}
-
-.first {
-  border-left: solid 0.1px black;
-}
-
-.selected {
-  background-color: rgb(67, 163, 67);
-=======
 <style lang="scss" scoped>
 .hour {
   width: 100px;
@@ -67,9 +45,9 @@ export default {
   background-color: white;
   border-top: none;
   border-left: none;
-  &:nth-child(2) {
+  /*&:nth-child(2) {
     border-top: solid 0.1px rgb(230, 230, 230);
-  }
+  }*/
 }
 
 .first {
@@ -81,6 +59,5 @@ export default {
   border: solid 0.1px #33c88e90;
   border-top: none;
   border-left: none;
->>>>>>> 506f61c3b5ae615afad28bfe51aefdd2eb41d9c2
 }
 </style>
