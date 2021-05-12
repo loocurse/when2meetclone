@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -62,6 +64,7 @@ export default {
     async submitHandler() {
       // TODO form validation 1. ensure date and time are far away 2. ensure event name is not empty
       // convert datetime
+      let eventId;
 
       const eventDetails = {
         event_name: this.name,
@@ -70,23 +73,16 @@ export default {
         start_time: this.stime,
         end_time: this.etime,
       };
-      console.table(eventDetails);
-      let response = await fetch("http://localhost:3000/events/add", {
-        mode: "no-cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(eventDetails),
-      });
-
-      let result = await response.json();
-      console.log(result);
+      axios
+        .post("http://localhost:3000/events/add", eventDetails)
+        .then((res) => {
+          eventId = res.data;
+        });
 
       this.clearForm();
       // redirect user
       // backend endpoint to create new event and get event id
-      this.$router.push({ name: "event", params: { id: 100 } });
+      this.$router.push({ name: "event", params: { id: eventId } });
     },
     clearForm() {
       this.name = "";

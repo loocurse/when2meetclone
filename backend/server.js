@@ -4,6 +4,7 @@ const connectDB = require("../backend/connection");
 const user = require("./Models/User");
 var bodyParser = require("body-parser");
 const unix_converter = require("./utils");
+var cors = require("cors");
 
 require("dotenv").config;
 
@@ -18,6 +19,7 @@ app.use(
 
 // app.use("/Models/event", userRouter);
 app.use(express.json());
+app.use(cors());
 
 app.get("/events", function (req, res) {
   //Show all users
