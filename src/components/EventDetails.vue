@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { monthArray } from "../utils/CalendarGenerator";
+//import { monthArray } from "../utils/CalendarGenerator";
 export default {
   data() {
     return {
@@ -33,10 +33,22 @@ export default {
   computed: {
     dateParser() {
       let date = this.details.created;
-      let months = monthArray();
+      let monthNames = new Array();
+      monthNames[0] = "Jan";
+      monthNames[1] = "Feb";
+      monthNames[2] = "Mar";
+      monthNames[3] = "Apr";
+      monthNames[4] = "May";
+      monthNames[5] = "Jun";
+      monthNames[6] = "Jul";
+      monthNames[7] = "Aug";
+      monthNames[8] = "Sep";
+      monthNames[9] = "Oct";
+      monthNames[10] = "Nov";
+      monthNames[11] = "Dec";
 
       return `${date.getDate()} ${
-        months[date.getMonth()]
+        monthNames[date.getMonth()]
       } ${date.getFullYear()}`;
     },
   },
