@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getMonth } from "../utils";
+import { getMonths } from "../utils.js";
 export default {
   data() {
     return {
@@ -33,7 +33,7 @@ export default {
   computed: {
     dateParser() {
       let date = this.details.created;
-      let monthNames = getMonth();
+      let monthNames = getMonths();
 
       return `${date.getDate()} ${
         monthNames[date.getMonth()]

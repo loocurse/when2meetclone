@@ -55,7 +55,7 @@ export default {
     this.sdate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
-    a.setDate(a.getDate() + 7);
+    a.setDate(a.getDate() + 6);
     this.edate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
@@ -73,11 +73,11 @@ export default {
         start_time: this.stime,
         end_time: this.etime,
       };
-      axios
-        .post("http://localhost:3000/events/add", eventDetails)
-        .then((res) => {
-          eventId = res.data;
-        });
+      const postResponse = await axios.post(
+        "http://localhost:3000/events/add",
+        eventDetails
+      );
+      eventId = postResponse.data;
 
       this.clearForm();
       // redirect user

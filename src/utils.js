@@ -12,7 +12,9 @@ monthNames[9] = "Oct";
 monthNames[10] = "Nov";
 monthNames[11] = "Dec";
 
-const getMonths = () => monthNames;
+const getMonths = () => {
+  return monthNames;
+};
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());

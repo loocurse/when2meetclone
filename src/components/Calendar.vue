@@ -4,7 +4,7 @@
       <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
     </div>
     <div class="calendar" v-if="calendarLoaded">
-      <div class="day" v-for="day in result" :key="day">
+      <div class="day" v-for="(day, idx) in result" :key="day">
         <div class="daylabel">
           <span>{{ getDate(day[0]) }}</span>
           <p>{{ getDay(day[0]) }}</p>
