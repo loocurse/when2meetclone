@@ -1,7 +1,7 @@
 <template>
   <div
     class="hour"
-    :style="styleBinding(Data[hour].length)"
+    :style="styleBinding(availability[hour].length)"
     :class="idx === 0 ? 'first' : ''"
     v-for="hour in day"
     :key="`${hour}`"
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  props: ["day", "idx", "Data"],
+  props: ["day", "idx", "availability"],
   setup(props, context) {
     let setting = true;
 

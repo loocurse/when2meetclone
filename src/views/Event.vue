@@ -9,7 +9,7 @@
   </div>
 
   <div class="content">
-    <DisplayCalendar @eventRangeHandler="eventRangeHandler" />
+    <Calendar />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -18,30 +18,23 @@
 </template>
 
 <script>
-import DisplayCalendar from "../components/DisplayCalendar.vue";
+import Calendar from "../components/Calendar.vue";
 import Participants from "../components/Participants";
 import EventDetails from "../components/EventDetails";
-import { useRoute } from "vue-router";
 import SignIn from "../components/SignIn.vue";
 import { ref } from "@vue/reactivity";
 
 export default {
   components: {
-    DisplayCalendar,
+    Calendar,
     Participants,
     EventDetails,
   },
   setup() {
-    const route = useRoute();
-
     const eventRange = ref("");
 
     const eventRangeHandler = (eventrange) => {
       eventRange.value = eventrange;
-    };
-
-    const getEventName = (id) => {
-      return "Project Meeting";
     };
 
     const signIn = ({ name, password }) => {
@@ -49,9 +42,8 @@ export default {
     };
 
     const signedInBool = ref(false);
-    const eventName = getEventName(route.params.id);
 
-    return { eventName, signIn, eventRange, eventRangeHandler };
+    return { signIn, eventRange, eventRangeHandler };
   },
 };
 </script>
