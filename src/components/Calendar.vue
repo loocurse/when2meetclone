@@ -23,7 +23,13 @@
 
 <script>
 import { onMounted, ref } from "vue";
-import { timeLabelGenerator, getLabelTop, splitToChunks } from "../utils";
+import {
+  timeLabelGenerator,
+  getLabelTop,
+  splitToChunks,
+  getDate,
+  getDay,
+} from "../utils";
 import HourBox from "./HourBox.vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
@@ -35,39 +41,18 @@ export default {
     let timeSelected = [];
     const route = useRoute();
     let availability = ref();
-    let timeLabels;
+    let timeLabels = ref([]);
     let result = ref();
     let labelTop = ref();
+    let eventName = "";
 
     const getEventInformation = async () => {
       let eventData = await axios.get(
         "http://localhost:3000/events/" + route.params.id
       );
       availability.value = eventData.data.availability;
+      eventName = eventData.data.event_name;
     };
-
-    const getDate = (unixObject) => {
-      const a = new Date(unixObject * 1000);
-      return a.getDate();
-    };
-    const getDay = (unixObject) => {
-      const a = new Date(unixObject * 1000);
-      return Intl.DateTimeFormat("en-US", { weekday: "long" }).format(a);
-    };
-
-    onMounted(async () => {
-      await getEventInformation();
-      result.value = splitToChunks(Object.keys(availability.value), 6);
-      timeLabels = timeLabelGenerator(result.value[0]);
-      labelTop = getLabelTop(
-        Object.keys(availability.value)[0],
-        Object.keys(availability.value)[
-          Object.keys(availability.value).length - 1
-        ]
-      );
-      calendarLoaded.value = true;
-      emit("eventRangeHandler", labelTop); // emit information up to indicate label's date range
-    });
 
     // when users click and drag, and there is no date already there, this function runs
     const addEvent = (event) => {
@@ -84,6 +69,21 @@ export default {
         return val !== event.target.id;
       });
     };
+
+    onMounted(async () => {
+      await getEventInformation(); // get event information
+      result.value = splitToChunks(Object.keys(availability.value), 6); // split into days
+      timeLabels.value = timeLabelGenerator(result.value[0]); // generate the timings
+      labelTop = getLabelTop(
+        Object.keys(availability.value)[0],
+        Object.keys(availability.value)[
+          Object.keys(availability.value).length - 1
+        ]
+      );
+      calendarLoaded.value = true;
+
+      emit("eventRangeHandler", { range: labelTop, name: eventName }); // emit information up to indicate label's date range
+    });
 
     return {
       availability,

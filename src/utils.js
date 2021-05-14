@@ -12,6 +12,8 @@ monthNames[9] = "Oct";
 monthNames[10] = "Nov";
 monthNames[11] = "Dec";
 
+const getMonths = () => monthNames;
+
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
@@ -60,8 +62,8 @@ function formatAMPM(date) {
  * @param {array} title - The first array of the list of days
  */
 const timeLabelGenerator = (firstDay) => {
-  const firstTime = new Date(firstDay[0] * 1000);
-  const lastTime = new Date(firstDay[firstDay.length - 1] * 1000);
+  const firstTime = new Date(firstDay[0] * 1000 - 28800000);
+  const lastTime = new Date(firstDay[firstDay.length - 1] * 1000 - 28800000);
   const hours = getHours(firstTime, lastTime);
   return hours.map(formatAMPM);
 };
@@ -78,6 +80,11 @@ const getLabelTop = (start, end) => {
   } - ${last.getDate()} ${monthNames[last.getMonth() + 1]}`;
 };
 
+/**
+ * Takes in all the available timings and split into n parts
+ * @param {array} array array - The first array of the list of days
+ * @param {parts} number parts - How many different arrays it is split into
+ */
 function splitToChunks(array, parts) {
   let result = [];
   for (let i = parts; i > 0; i--) {
@@ -86,4 +93,20 @@ function splitToChunks(array, parts) {
   return result;
 }
 
-export { timeLabelGenerator, getLabelTop, splitToChunks };
+const getDate = (unixObject) => {
+  const a = new Date(unixObject * 1000);
+  return a.getDate();
+};
+const getDay = (unixObject) => {
+  const a = new Date(unixObject * 1000);
+  return Intl.DateTimeFormat("en-US", { weekday: "long" }).format(a);
+};
+
+export {
+  timeLabelGenerator,
+  getLabelTop,
+  splitToChunks,
+  getDate,
+  getDay,
+  getMonths,
+};

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-//import { monthArray } from "../utils/CalendarGenerator";
+import { getMonth } from "../utils";
 export default {
   data() {
     return {
@@ -33,19 +33,7 @@ export default {
   computed: {
     dateParser() {
       let date = this.details.created;
-      let monthNames = new Array();
-      monthNames[0] = "Jan";
-      monthNames[1] = "Feb";
-      monthNames[2] = "Mar";
-      monthNames[3] = "Apr";
-      monthNames[4] = "May";
-      monthNames[5] = "Jun";
-      monthNames[6] = "Jul";
-      monthNames[7] = "Aug";
-      monthNames[8] = "Sep";
-      monthNames[9] = "Oct";
-      monthNames[10] = "Nov";
-      monthNames[11] = "Dec";
+      let monthNames = getMonth();
 
       return `${date.getDate()} ${
         monthNames[date.getMonth()]

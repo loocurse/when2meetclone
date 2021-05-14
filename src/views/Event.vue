@@ -9,7 +9,7 @@
   </div>
 
   <div class="content">
-    <Calendar />
+    <Calendar @eventRangeHandler="eventRangeHandler" />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -32,9 +32,11 @@ export default {
   },
   setup() {
     const eventRange = ref("");
+    const eventName = ref("");
 
-    const eventRangeHandler = (eventrange) => {
-      eventRange.value = eventrange;
+    const eventRangeHandler = ({ name, range }) => {
+      eventRange.value = range;
+      eventName.value = name;
     };
 
     const signIn = ({ name, password }) => {
@@ -43,7 +45,7 @@ export default {
 
     const signedInBool = ref(false);
 
-    return { signIn, eventRange, eventRangeHandler };
+    return { signIn, eventRange, eventRangeHandler, eventName };
   },
 };
 </script>
