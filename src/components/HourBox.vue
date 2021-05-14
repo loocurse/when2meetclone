@@ -14,25 +14,23 @@
 <script>
 export default {
   props: ["day", "idx", "availability"],
-  setup(props, context) {
+  setup(props, { emit }) {
     let setting = true;
 
     const clickHandler = (event) => {
       if (event.target.classList.value.includes("selected")) {
         setting = false;
-        context.emit("removeEvent", event);
+        emit("removeEvent", event);
       } else {
         setting = true;
-        context.emit("addEvent", event);
+        emit("addEvent", event);
       }
     };
 
     const dragHandler = (event) => {
       let mouseClickedDown = event.buttons === 1;
       if (mouseClickedDown) {
-        setting
-          ? context.emit("addEvent", event)
-          : context.emit("removeEvent", event);
+        setting ? emit("addEvent", event) : emit("removeEvent", event);
       }
     };
 

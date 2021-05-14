@@ -55,7 +55,7 @@ export default {
     this.sdate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
-    a.setDate(a.getDate() + 6);
+    a.setDate(a.getDate() + 5);
     this.edate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
