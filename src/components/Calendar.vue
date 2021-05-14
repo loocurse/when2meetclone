@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 import {
   timeLabelGenerator,
   getLabelTop,
@@ -36,6 +36,7 @@ import { useRoute } from "vue-router";
 
 export default {
   components: { HourBox },
+  props: ["userName"],
   setup(props, { emit }) {
     let calendarLoaded = ref(false);
     const route = useRoute();
@@ -44,7 +45,8 @@ export default {
     let result = ref();
     let labelTop = ref();
     let eventName = "";
-    const userName = ref("John");
+    let { userName } = toRefs(props);
+
 
     const getEventInformation = async () => {
       let eventData = await axios.get(

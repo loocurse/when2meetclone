@@ -1,4 +1,5 @@
 <template>
+  <SignIn @signIn="signIn" v-show="userName.length === 0" />
   <div class="event-details">
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
@@ -9,7 +10,7 @@
   </div>
 
   <div class="content">
-    <Calendar @eventRangeHandler="eventRangeHandler" />
+    <Calendar @eventRangeHandler="eventRangeHandler" :userName="userName" />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -25,14 +26,17 @@ import SignIn from "../components/SignIn.vue";
 import { ref } from "@vue/reactivity";
 
 export default {
+  emits: ["signIn"],
   components: {
     Calendar,
     Participants,
     EventDetails,
+    SignIn,
   },
   setup() {
     const eventRange = ref("");
     const eventName = ref("");
+    const userName = ref("");
 
     const eventRangeHandler = ({ name, range }) => {
       eventRange.value = range;
@@ -40,12 +44,10 @@ export default {
     };
 
     const signIn = ({ name, password }) => {
-      console.log(name);
+      userName.value = name;
     };
 
-    const signedInBool = ref(false);
-
-    return { signIn, eventRange, eventRangeHandler, eventName };
+    return { signIn, eventRange, eventRangeHandler, eventName, userName };
   },
 };
 </script>

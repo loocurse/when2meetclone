@@ -37,34 +37,11 @@ export default {
     const styleBinding = (degree) => {
       return {
         "background-color": `hsl(157, 59%, ${100 - degree * 10}%)`,
-        border: degree === 0 ? "" : `solid 0.1px hsl(157, 59%, ${80}%)`,
+        border:
+          degree === 0 ? "" : `solid 0.1px hsl(157, 59%, ${90 - degree * 10}%)`,
         "border-top": "none",
         "border-left": "none",
       };
-      //if (degree === 0) {
-      //  return {
-      //    "background-color": `hsl(157, 59%, 100%)`,
-      //    //border: "solid 0.1px hsl(157, 59%, 60%)",
-      //    "border-top": "none",
-      //    "border-left": "none",
-      //  };
-      //} else if (degree === 1) {
-      //  return {
-      //    "background-color": `hsl(157, 59%, 90%)`,
-      //    border: "solid 0.1px hsl(157, 59%, 60%)",
-      //    "border-top": "none",
-      //    "border-left": "none",
-      //  };
-      //} else if (degree === 2) {
-      //  return {
-      //    "background-color": `hsl(157, 59%, 80%)`,
-      //    border: "solid 0.1px hsl(157, 59%, 60%)",
-      //    "border-top": "none",
-      //    "border-left": "none",
-      //  };
-      //} else {
-      //  return;
-      //}
     };
 
     return { dragHandler, clickHandler, styleBinding };
