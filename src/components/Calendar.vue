@@ -38,13 +38,13 @@ export default {
   components: { HourBox },
   setup(props, { emit }) {
     let calendarLoaded = ref(false);
-    let timeSelected = [];
     const route = useRoute();
     let availability = ref();
     let timeLabels = ref([]);
     let result = ref();
     let labelTop = ref();
     let eventName = "";
+    const userName = ref("John");
 
     const getEventInformation = async () => {
       let eventData = await axios.get(
@@ -57,17 +57,21 @@ export default {
     // when users click and drag, and there is no date already there, this function runs
     const addEvent = (event) => {
       event.target.classList.add("selected");
-      if (timeSelected.indexOf(event.target.id) === -1) {
-        timeSelected.push(event.target.id);
+      let unixtime = event.target.id;
+      if (availability.value[unixtime].indexOf(userName.value) === -1) {
+        availability.value[unixtime].push(userName.value);
       }
     };
 
     // when users click and drag, and there is already an input at this div, this function runs
     const removeEvent = (event) => {
       event.target.classList.remove("selected");
-      timeSelected = timeSelected.filter((val) => {
-        return val !== event.target.id;
-      });
+      let unixtime = event.target.id;
+      availability.value[unixtime] = availability.value[unixtime].filter(
+        (val) => {
+          return val !== userName.value;
+        }
+      );
     };
 
     onMounted(async () => {
@@ -105,6 +109,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-right: 10px;
 }
 
 .calendar {
