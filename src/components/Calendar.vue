@@ -32,7 +32,9 @@ import {
 } from "../utils";
 import HourBox from "./HourBox.vue";
 import axios from "axios";
+import { instance } from "../api.js";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   components: { HourBox },
@@ -46,12 +48,12 @@ export default {
     let labelTop = ref();
     let eventName = "";
     let { userName } = toRefs(props);
-
+    const store = useStore();
 
     const getEventInformation = async () => {
-      let eventData = await axios.get(
-        "http://localhost:3000/events/" + route.params.id
-      );
+      let eventData = await store.getters.getEventData;
+      console.log(eventData);
+
       availability.value = eventData.data.availability;
       eventName = eventData.data.event_name;
     };
@@ -77,6 +79,7 @@ export default {
     };
 
     onMounted(async () => {
+      await store.dispatch("fetchAvailabilities");
       await getEventInformation(); // get event information
       result.value = splitToChunks(Object.keys(availability.value), 6); // split into days
       timeLabels.value = timeLabelGenerator(result.value[0]); // generate the timings
