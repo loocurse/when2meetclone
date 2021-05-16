@@ -45,7 +45,7 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     p {
       display: inline;
       margin-left: 10px;
