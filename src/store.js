@@ -7,6 +7,7 @@ import {
   getDate,
   getDay,
 } from "./utils";
+import { isEmpty, isNil } from "lodash";
 
 export default createStore({
   state() {
@@ -33,22 +34,50 @@ export default createStore({
     },
   },
   actions: {
-    fetchAvailabilities({ commit }, id) {
-      instance
-        .get("60a09733d643c48ee7352d2e")
-        .then((res) => commit("FETCH_AVAILABILITY", res.data));
+    async fetchAvailabilities({ commit }, id) {
+      const response = await instance.get("60a09733d643c48ee7352d2e");
+      commit("FETCH_AVAILABILITY", response.data);
+    },
+    addEvent({ commit }, id) {
+      commit("ADD_AVAILABILITY", event);
+    },
+    removeEvent({ commit }, id) {
+      commit("REMOVE_AVAILABILITY", event);
     },
   },
   getters: {
     getEventData(state) {
-      console.log(state.eventData);
       return state.eventData;
     },
+    getAvailability(state) {
+      return state.eventData.availability;
+    },
     getSplitAvailabilities(state) {
-      return;
+      if (isEmpty(state.eventData)) {
+        return;
+      }
+      const output = splitToChunks(state.eventData.availability, 6);
+      console.log(output);
+      return output;
     },
     getEventName(state) {
       return state.eventData.event_name;
+    },
+    getTimeLabels(state, getters) {
+      if (isEmpty(state.eventData)) {
+        return [];
+      }
+      return timeLabelGenerator(getters.getSplitAvailabilities[0]);
+    },
+    getTopLabel(state, getters) {
+      const avail = state.eventData.availability;
+      if (isNil(avail)) {
+        return;
+      }
+      return getLabelTop(
+        Object.keys(avail)[0],
+        Object.keys(avail)[Object.keys(avail).length - 1]
+      );
     },
   },
 });

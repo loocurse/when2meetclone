@@ -24,6 +24,8 @@ import Participants from "../components/Participants";
 import EventDetails from "../components/EventDetails";
 import SignIn from "../components/SignIn.vue";
 import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   emits: ["signIn"],
@@ -34,6 +36,7 @@ export default {
     SignIn,
   },
   setup() {
+    const store = useStore();
     const eventRange = ref("");
     const eventName = ref("");
     const userName = ref("");
@@ -47,7 +50,13 @@ export default {
       userName.value = name;
     };
 
-    return { signIn, eventRange, eventRangeHandler, eventName, userName };
+    return {
+      signIn,
+      eventRange: computed(() => store.getters.getTopLabel),
+      eventRangeHandler,
+      userName,
+      eventName: computed(() => store.getters.getEventName),
+    };
   },
 };
 </script>

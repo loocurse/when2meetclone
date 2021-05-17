@@ -84,10 +84,11 @@ const getLabelTop = (start, end) => {
 
 /**
  * Takes in all the available timings and split into n parts
- * @param {array} array array - The first array of the list of days
+ * @param {object} object object - The first array of the list of days
  * @param {parts} number parts - How many different arrays it is split into
  */
-function splitToChunks(array, parts) {
+function splitToChunks(obj, parts) {
+  let array = Object.keys(obj);
   let result = [];
   for (let i = parts; i > 0; i--) {
     result.push(array.splice(0, Math.ceil(array.length / i)));

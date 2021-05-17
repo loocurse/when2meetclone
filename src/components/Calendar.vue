@@ -3,7 +3,7 @@
     <div class="timelabels">
       <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
     </div>
-    <div class="calendar" v-if="calendarLoaded">
+    <div class="calendar">
       <div class="day" v-for="(day, idx) in result" :key="day">
         <div class="daylabel">
           <span>{{ getDate(day[0]) }}</span>
@@ -12,7 +12,6 @@
         <HourBox
           :day="day"
           :idx="idx"
-          :availability="availability"
           @addEvent="addEvent"
           @removeEvent="removeEvent"
         />
@@ -22,86 +21,63 @@
 </template>
 
 <script>
-import { onMounted, ref, toRefs } from "vue";
-import {
-  timeLabelGenerator,
-  getLabelTop,
-  splitToChunks,
-  getDate,
-  getDay,
-} from "../utils";
+import { ref, toRefs } from "vue";
+import { getDate, getDay } from "../utils";
 import HourBox from "./HourBox.vue";
-import axios from "axios";
-import { instance } from "../api.js";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
   components: { HourBox },
   props: ["userName"],
   setup(props, { emit }) {
-    let calendarLoaded = ref(false);
     const route = useRoute();
-    let availability = ref();
-    let timeLabels = ref([]);
-    let result = ref();
-    let labelTop = ref();
-    let eventName = "";
-    let { userName } = toRefs(props);
     const store = useStore();
-
-    const getEventInformation = async () => {
-      let eventData = await store.getters.getEventData;
-      console.log(eventData);
-
-      availability.value = eventData.data.availability;
-      eventName = eventData.data.event_name;
-    };
 
     // when users click and drag, and there is no date already there, this function runs
     const addEvent = (event) => {
       event.target.classList.add("selected");
       let unixtime = event.target.id;
-      if (availability.value[unixtime].indexOf(userName.value) === -1) {
-        availability.value[unixtime].push(userName.value);
-      }
+      //if (availability.value[unixtime].indexOf(userName.value) === -1) {
+      //  availability.value[unixtime].push(userName.value);
+      //}
     };
 
     // when users click and drag, and there is already an input at this div, this function runs
     const removeEvent = (event) => {
       event.target.classList.remove("selected");
       let unixtime = event.target.id;
-      availability.value[unixtime] = availability.value[unixtime].filter(
-        (val) => {
-          return val !== userName.value;
-        }
-      );
+      //availability.value[unixtime] = availability.value[unixtime].filter(
+      //  (val) => {
+      //    return val !== userName.value;
+      //  }
+      //);
     };
+    store.dispatch("fetchAvailabilities");
 
-    onMounted(async () => {
-      await store.dispatch("fetchAvailabilities");
-      await getEventInformation(); // get event information
-      result.value = splitToChunks(Object.keys(availability.value), 6); // split into days
-      timeLabels.value = timeLabelGenerator(result.value[0]); // generate the timings
-      labelTop = getLabelTop(
-        Object.keys(availability.value)[0],
-        Object.keys(availability.value)[
-          Object.keys(availability.value).length - 1
-        ]
-      );
-      calendarLoaded.value = true;
+    //onMounted(async () => {
+    //  //await getEventInformation(); // get event information
+    //  availability.value = store.getters.getAvailability;
+    //  result.value = store.getters.getSplitAvailabilities;
+    //  timeLabels.value = timeLabelGenerator(result.value[0]); // generate the timings
+    //  labelTop = getLabelTop(
+    //    Object.keys(availability.value)[0],
+    //    Object.keys(availability.value)[
+    //      Object.keys(availability.value).length - 1
+    //    ]
+    //  );
+    //  calendarLoaded.value = true;
 
-      emit("eventRangeHandler", { range: labelTop, name: eventName }); // emit information up to indicate label's date range
-    });
+    //});
 
     return {
-      availability,
-      calendarLoaded,
-      result,
+      availability: computed(() => store.getters.getAvailability),
+      result: computed(() => store.getters.getSplitAvailabilities),
       addEvent,
       getDate,
       getDay,
-      timeLabels,
+      timeLabels: computed(() => store.getters.getTimeLabels),
       removeEvent,
     };
   },

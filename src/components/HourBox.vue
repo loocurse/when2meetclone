@@ -12,10 +12,14 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+
 export default {
-  props: ["day", "idx", "availability"],
+  props: ["day", "idx"],
   setup(props, { emit }) {
     let setting = true;
+    const store = useStore();
 
     const clickHandler = (event) => {
       if (event.target.classList.value.includes("selected")) {
@@ -44,7 +48,12 @@ export default {
       };
     };
 
-    return { dragHandler, clickHandler, styleBinding };
+    return {
+      dragHandler,
+      clickHandler,
+      styleBinding,
+      availability: computed(() => store.getters.getAvailability),
+    };
   },
 };
 </script>
