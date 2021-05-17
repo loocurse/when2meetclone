@@ -17,24 +17,28 @@ import { computed } from "vue";
 
 export default {
   props: ["day", "idx"],
-  setup(props, { emit }) {
+  setup() {
     let setting = true;
     const store = useStore();
 
     const clickHandler = (event) => {
+      let unixtime = event.target.id;
       if (event.target.classList.value.includes("selected")) {
         setting = false;
-        emit("removeEvent", event);
+        store.dispatch("removeEvent", { unixtime });
       } else {
         setting = true;
-        emit("addEvent", event);
+        store.dispatch("addEvent", { unixtime });
       }
     };
 
     const dragHandler = (event) => {
+      let unixtime = event.target.id;
       let mouseClickedDown = event.buttons === 1;
       if (mouseClickedDown) {
-        setting ? emit("addEvent", event) : emit("removeEvent", event);
+        setting
+          ? store.dispatch("addEvent", { unixtime })
+          : store.dispatch("removeEvent", { unixtime });
       }
     };
 

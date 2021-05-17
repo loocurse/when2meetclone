@@ -9,19 +9,13 @@
           <span>{{ getDate(day[0]) }}</span>
           <p>{{ getDay(day[0]) }}</p>
         </div>
-        <HourBox
-          :day="day"
-          :idx="idx"
-          @addEvent="addEvent"
-          @removeEvent="removeEvent"
-        />
+        <HourBox :day="day" :idx="idx" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, toRefs } from "vue";
 import { getDate, getDay } from "../utils";
 import HourBox from "./HourBox.vue";
 import { useRoute } from "vue-router";
@@ -30,55 +24,18 @@ import { computed } from "vue";
 
 export default {
   components: { HourBox },
-  props: ["userName"],
-  setup(props, { emit }) {
+  setup() {
     const route = useRoute();
     const store = useStore();
-
-    // when users click and drag, and there is no date already there, this function runs
-    const addEvent = (event) => {
-      event.target.classList.add("selected");
-      let unixtime = event.target.id;
-      //if (availability.value[unixtime].indexOf(userName.value) === -1) {
-      //  availability.value[unixtime].push(userName.value);
-      //}
-    };
-
-    // when users click and drag, and there is already an input at this div, this function runs
-    const removeEvent = (event) => {
-      event.target.classList.remove("selected");
-      let unixtime = event.target.id;
-      //availability.value[unixtime] = availability.value[unixtime].filter(
-      //  (val) => {
-      //    return val !== userName.value;
-      //  }
-      //);
-    };
+    // TODO add dynamic routing into dispatch payload
     store.dispatch("fetchAvailabilities");
-
-    //onMounted(async () => {
-    //  //await getEventInformation(); // get event information
-    //  availability.value = store.getters.getAvailability;
-    //  result.value = store.getters.getSplitAvailabilities;
-    //  timeLabels.value = timeLabelGenerator(result.value[0]); // generate the timings
-    //  labelTop = getLabelTop(
-    //    Object.keys(availability.value)[0],
-    //    Object.keys(availability.value)[
-    //      Object.keys(availability.value).length - 1
-    //    ]
-    //  );
-    //  calendarLoaded.value = true;
-
-    //});
 
     return {
       availability: computed(() => store.getters.getAvailability),
       result: computed(() => store.getters.getSplitAvailabilities),
-      addEvent,
       getDate,
       getDay,
       timeLabels: computed(() => store.getters.getTimeLabels),
-      removeEvent,
     };
   },
 };

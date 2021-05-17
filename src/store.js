@@ -1,18 +1,13 @@
 import { createStore } from "vuex";
 import { instance } from "./api";
-import {
-  timeLabelGenerator,
-  getLabelTop,
-  splitToChunks,
-  getDate,
-  getDay,
-} from "./utils";
+import { timeLabelGenerator, getLabelTop, splitToChunks } from "./utils";
 import { isEmpty, isNil } from "lodash";
 
 export default createStore({
   state() {
     return {
       eventData: {},
+      userName: "lkajsfd",
     };
   },
   mutations: {
@@ -20,16 +15,19 @@ export default createStore({
       state.eventData = data;
     },
     ADD_AVAILABILITY(state, content) {
-      const { user, unixtime } = content;
-      state.eventData.availability[unixtime].push(user);
+      const { unixtime } = content;
+      const userName = state.userName;
+      if (state.eventData.availability[unixtime].indexOf(userName) === -1) {
+        state.eventData.availability[unixtime].push(userName);
+      }
     },
     REMOVE_AVAILABILITY(state, content) {
-      const { user, unixtime } = content;
-      state.eventData.availability[unixtime].push(user);
+      const { unixtime } = content;
+      const userName = state.userName;
       state.eventData.availability.value[
         unixtime
       ] = state.eventData.availability.value[unixtime].filter((val) => {
-        return val !== user;
+        return val !== userName;
       });
     },
   },
@@ -38,14 +36,17 @@ export default createStore({
       const response = await instance.get("60a09733d643c48ee7352d2e");
       commit("FETCH_AVAILABILITY", response.data);
     },
-    addEvent({ commit }, id) {
-      commit("ADD_AVAILABILITY", event);
+    addEvent({ commit }, payload) {
+      commit("ADD_AVAILABILITY", payload);
     },
-    removeEvent({ commit }, id) {
-      commit("REMOVE_AVAILABILITY", event);
+    removeEvent({ commit }, payload) {
+      commit("REMOVE_AVAILABILITY", payload);
     },
   },
   getters: {
+    getUserName(state) {
+      return state.userName;
+    },
     getEventData(state) {
       return state.eventData;
     },
@@ -57,7 +58,6 @@ export default createStore({
         return;
       }
       const output = splitToChunks(state.eventData.availability, 6);
-      console.log(output);
       return output;
     },
     getEventName(state) {
