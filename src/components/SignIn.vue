@@ -22,14 +22,19 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const store = useStore();
+    const route = useRoute();
     const name = ref("");
     const password = ref("");
     const handleSubmit = () => {
-      store.dispatch("addUserName", name.value);
+      store.dispatch("addUserName", {
+        username: name.value,
+        eventID: route.params.id,
+      });
       name.value = "";
       password.value = "";
     };

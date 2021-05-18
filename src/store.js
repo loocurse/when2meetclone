@@ -7,7 +7,7 @@ export default createStore({
   state() {
     return {
       eventData: {},
-      userName: localStorage.getItem("username"),
+      userName: localStorage.getItem("ID"),
     };
   },
   mutations: {
@@ -30,9 +30,10 @@ export default createStore({
         return val !== userName;
       });
     },
-    ADD_USERNAME(state, username) {
+    ADD_USERNAME(state, content) {
+      const { username, id } = content;
+      state.eventData.users.push({ id, username });
       state.userName = username;
-      localStorage.setItem("username", username);
     },
   },
   actions: {
@@ -46,8 +47,16 @@ export default createStore({
     removeEvent({ commit }, payload) {
       commit("REMOVE_AVAILABILITY", payload);
     },
-    addUserName({ commit }, username) {
-      commit("ADD_USERNAME", username);
+    async addUserName({ commit }, content) {
+      const { username, eventID } = content;
+      // add user entry to database
+      const response = await instance.put(`/${eventID}/adduser`, {
+        user: username,
+      });
+      console.log("done");
+      // update local storage
+      localStorage.setItem("ID", response.data.id);
+      commit("ADD_USERNAME", { username, id: response.data.id });
     },
   },
   getters: {
@@ -88,6 +97,12 @@ export default createStore({
         Object.keys(avail)[0],
         Object.keys(avail)[Object.keys(avail).length - 1]
       );
+    },
+    getParticipantList(state) {
+      if (isEmpty(state.eventData)) {
+        return [];
+      }
+      return state.eventData.users;
     },
   },
 });

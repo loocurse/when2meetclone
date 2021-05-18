@@ -9,7 +9,7 @@
       <svg height="14" width="14">
         <circle cx="7" cy="7" r="7" fill="#78DA76" />
       </svg>
-      <p>{{ participant }}</p>
+      <p>{{ participant.name }}</p>
     </div>
   </div>
 </template>
@@ -18,8 +18,13 @@
 export default {
   data() {
     return {
-      participants: ["Lucas", "Yinmin", "Kevin"],
+      //participants: ["Lucas", "Yinmin", "Kevin"],
     };
+  },
+  computed: {
+    participants() {
+      return this.$store.getters.getParticipantList;
+    },
   },
 };
 </script>

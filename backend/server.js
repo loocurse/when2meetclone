@@ -3,7 +3,8 @@ const connectDB = require("../backend/connection");
 // const userRouter = require("../backend/API");
 const user = require("./models/Event");
 var bodyParser = require("body-parser");
-const unix_converter = require("./utils");
+//const unix_converter = require("./utils");
+const { IDGenerator, create_users_time_obj } = require("./utils.js");
 var cors = require("cors");
 
 require("dotenv").config;
@@ -45,7 +46,7 @@ app.post("/events/add", function (req, res) {
   const end_date = req.body.end_date;
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
-  const availability = unix_converter.create_users_time_obj(
+  const availability = create_users_time_obj(
     start_date,
     end_date,
     start_time,
@@ -69,15 +70,17 @@ app.post("/events/add", function (req, res) {
 });
 
 app.put("/events/:id/adduser", function (req, res) {
-  // Update existing availability
+  // Update a new user
   const userName = req.body.user;
+  const ID = IDGenerator();
+  const userObject = { id: ID, name: userName };
   user
     .updateOne(
       { _id: req.params.id },
-      { $push: { users: userName } },
+      { $push: { users: userObject } },
       { runValidators: true }
     )
-    .then(() => res.json({ message: "Successfully added user" }))
+    .then(() => res.json({ message: "Successfully added user", id: ID }))
     .catch((err) => console.log(err));
 });
 
