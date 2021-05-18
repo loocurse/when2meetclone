@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("../backend/connection");
 // const userRouter = require("../backend/API");
-const user = require("./Models/Event");
+const user = require("./models/Event");
 var bodyParser = require("body-parser");
 const unix_converter = require("./utils");
 var cors = require("cors");
