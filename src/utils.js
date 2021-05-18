@@ -1,3 +1,5 @@
+import { lastIndexOf } from "lodash";
+
 let monthNames = new Array();
 monthNames[0] = "Jan";
 monthNames[1] = "Feb";
@@ -75,8 +77,8 @@ const timeLabelGenerator = (firstDay) => {
  * @param {array} title - The first array of the list of days
  */
 const getLabelTop = (start, end) => {
-  const first = new Date(start * 1000);
-  const last = new Date(end * 1000);
+  const first = new Date(start * 1000 - 28800000);
+  const last = new Date(end * 1000 - 28800000);
   return `${first.getDate()} ${
     monthNames[first.getMonth() + 1]
   } - ${last.getDate()} ${monthNames[last.getMonth() + 1]}`;

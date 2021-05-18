@@ -5,12 +5,12 @@
       <form @submit.prevent="handleSubmit">
         <div class="row">
           <label for="name">Name: </label>
-          <input type="text" name="name" id="" v-model="name" />
+          <input type="text" name="name" v-model="name" />
         </div>
-        <div class="row">
+        <!--<div class="row">
           <label for="password">Password (optional):</label>
-          <input type="password" name="password" id="" v-model="password" />
-        </div>
+          <input type="password" name="password" v-model="password" />
+        </div>-->
         <div class="row">
           <button>Sign In</button>
         </div>
@@ -21,13 +21,15 @@
 
 <script>
 import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
 
 export default {
-  setup(props, { emit }) {
+  setup() {
+    const store = useStore();
     const name = ref("");
     const password = ref("");
     const handleSubmit = () => {
-      emit("signIn", { name: name.value, password: password.value });
+      store.dispatch("addUserName", name.value);
       name.value = "";
       password.value = "";
     };

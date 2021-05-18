@@ -1,5 +1,5 @@
 <template>
-  <SignIn @signIn="signIn" v-show="userName.length === 0" />
+  <SignIn v-show="usernameExist" />
   <div class="event-details">
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
@@ -10,7 +10,7 @@
   </div>
 
   <div class="content">
-    <Calendar @eventRangeHandler="eventRangeHandler" :userName="userName" />
+    <Calendar :userName="userName" />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -23,7 +23,6 @@ import Calendar from "../components/Calendar.vue";
 import Participants from "../components/Participants";
 import EventDetails from "../components/EventDetails";
 import SignIn from "../components/SignIn.vue";
-import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { computed } from "vue";
 
@@ -37,25 +36,12 @@ export default {
   },
   setup() {
     const store = useStore();
-    const eventRange = ref("");
-    const eventName = ref("");
-    const userName = ref("");
-
-    const eventRangeHandler = ({ name, range }) => {
-      eventRange.value = range;
-      eventName.value = name;
-    };
-
-    const signIn = ({ name, password }) => {
-      userName.value = name;
-    };
 
     return {
-      signIn,
-      eventRange: computed(() => store.getters.getTopLabel),
-      eventRangeHandler,
-      userName,
+      eventRange: computed(() => store.getters.getTop),
+      userName: computed(() => store.state.userName),
       eventName: computed(() => store.getters.getEventName),
+      usernameExist: computed(() => store.getters.usernameExist),
     };
   },
 };

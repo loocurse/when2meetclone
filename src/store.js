@@ -7,7 +7,7 @@ export default createStore({
   state() {
     return {
       eventData: {},
-      userName: "lkajsfd",
+      userName: localStorage.getItem("username"),
     };
   },
   mutations: {
@@ -30,10 +30,14 @@ export default createStore({
         return val !== userName;
       });
     },
+    ADD_USERNAME(state, username) {
+      state.userName = username;
+      localStorage.setItem("username", username);
+    },
   },
   actions: {
     async fetchAvailabilities({ commit }, id) {
-      const response = await instance.get("60a09733d643c48ee7352d2e");
+      const response = await instance.get(id);
       commit("FETCH_AVAILABILITY", response.data);
     },
     addEvent({ commit }, payload) {
@@ -42,8 +46,14 @@ export default createStore({
     removeEvent({ commit }, payload) {
       commit("REMOVE_AVAILABILITY", payload);
     },
+    addUserName({ commit }, username) {
+      commit("ADD_USERNAME", username);
+    },
   },
   getters: {
+    usernameExist(state) {
+      return isNil(state.userName);
+    },
     getUserName(state) {
       return state.userName;
     },

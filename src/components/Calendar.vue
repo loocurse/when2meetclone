@@ -27,8 +27,8 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    // TODO add dynamic routing into dispatch payload
-    store.dispatch("fetchAvailabilities");
+
+    store.dispatch("fetchAvailabilities", route.params.id);
 
     return {
       availability: computed(() => store.getters.getAvailability),
