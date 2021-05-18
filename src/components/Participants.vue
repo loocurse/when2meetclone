@@ -16,11 +16,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      //participants: ["Lucas", "Yinmin", "Kevin"],
-    };
-  },
   computed: {
     participants() {
       return this.$store.getters.getParticipantList;

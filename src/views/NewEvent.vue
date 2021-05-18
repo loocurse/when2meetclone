@@ -64,7 +64,7 @@ export default {
     async submitHandler() {
       // TODO form validation 1. ensure date and time are far away 2. ensure event name is not empty
       // convert datetime
-      let eventId;
+      let eventID;
 
       const eventDetails = {
         event_name: this.name,
@@ -77,12 +77,12 @@ export default {
         "http://localhost:3000/events/add",
         eventDetails
       );
-      eventId = postResponse.data;
+      eventID = postResponse.data;
 
       this.clearForm();
       // redirect user
       // backend endpoint to create new event and get event id
-      this.$router.push({ name: "event", params: { id: eventId } });
+      this.$router.push({ name: "event", params: { id: eventID } });
     },
     clearForm() {
       this.name = "";

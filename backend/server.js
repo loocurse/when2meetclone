@@ -84,5 +84,19 @@ app.put("/events/:id/adduser", function (req, res) {
     .catch((err) => console.log(err));
 });
 
+app.put("/events/:id/update", function (req, res) {
+  // update availabilities of user
+  const avail = req.body.availability;
+  user
+    .updateOne(
+      { _id: req.params.id },
+      { availability: avail },
+      { runValidators: true }
+    )
+    .then(() =>
+      res.json({ message: "Successfully updated availability of user" })
+    );
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening to port ${port}`));

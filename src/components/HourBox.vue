@@ -14,32 +14,39 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   props: ["day", "idx"],
   setup() {
-    let setting = true;
+    let action = "ADD";
     const store = useStore();
+    const route = useRoute();
 
     const clickHandler = (event) => {
-      let unixtime = event.target.id;
-      if (event.target.classList.value.includes("selected")) {
-        setting = false;
-        store.dispatch("removeEvent", { unixtime });
-      } else {
-        setting = true;
-        store.dispatch("addEvent", { unixtime });
-      }
+      event.target.classList.value.includes("selected")
+        ? (action = "REMOVE")
+        : (action = "ADD");
+      UPDATE_AVAILABILITY(action, event);
     };
 
     const dragHandler = (event) => {
-      let unixtime = event.target.id;
       let mouseClickedDown = event.buttons === 1;
       if (mouseClickedDown) {
-        setting
-          ? store.dispatch("addEvent", { unixtime })
-          : store.dispatch("removeEvent", { unixtime });
+        UPDATE_AVAILABILITY(action, event);
       }
+    };
+
+    const UPDATE_AVAILABILITY = (action, event) => {
+      let unixtime = event.target.id;
+      if (action === "ADD") {
+        event.target.classList.add("selected");
+        store.dispatch("addEvent", { unixtime, eventID: route.params.id });
+      } else if (action === "REMOVE") {
+        event.target.classList.remove("selected");
+        store.dispatch("removeEvent", { unixtime, eventID: route.params.id });
+      }
+      store.dispatch("updateDatabase");
     };
 
     const styleBinding = (degree) => {
@@ -79,10 +86,10 @@ export default {
   border-left: solid 0.1px rgb(230, 230, 230) !important;
 }
 
-.selected {
+/*.selected {
   background-color: hsl(157, 59%, 50%);
   border: solid 0.1px hsl(157, 59%, 70%);
   border-top: none;
   border-left: none;
-}
+}*/
 </style>

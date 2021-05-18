@@ -7,7 +7,7 @@ export default createStore({
   state() {
     return {
       eventData: {},
-      userName: localStorage.getItem("ID"),
+      userID: localStorage.getItem("ID"),
     };
   },
   mutations: {
@@ -16,44 +16,47 @@ export default createStore({
     },
     ADD_AVAILABILITY(state, content) {
       const { unixtime } = content;
-      const userName = state.userName;
-      if (state.eventData.availability[unixtime].indexOf(userName) === -1) {
-        state.eventData.availability[unixtime].push(userName);
+      const userID = state.userID;
+      if (state.eventData.availability[unixtime].indexOf(userID) === -1) {
+        state.eventData.availability[unixtime].push(userID);
       }
     },
     REMOVE_AVAILABILITY(state, content) {
       const { unixtime } = content;
-      const userName = state.userName;
-      state.eventData.availability.value[
+      const userID = state.userID;
+      state.eventData.availability[unixtime] = state.eventData.availability[
         unixtime
-      ] = state.eventData.availability.value[unixtime].filter((val) => {
-        return val !== userName;
+      ].filter((val) => {
+        return val !== userID;
       });
     },
     ADD_USERNAME(state, content) {
       const { username, id } = content;
       state.eventData.users.push({ id, username });
-      state.userName = username;
+      state.userID = id;
     },
   },
   actions: {
-    async fetchAvailabilities({ commit }, id) {
-      const response = await instance.get(id);
+    async fetchAvailabilities({ commit }, eventID) {
+      const response = await instance.get(eventID);
       commit("FETCH_AVAILABILITY", response.data);
     },
-    addEvent({ commit }, payload) {
-      commit("ADD_AVAILABILITY", payload);
+    addEvent({ commit }, { unixtime, eventID }) {
+      commit("ADD_AVAILABILITY", { unixtime, eventID });
     },
-    removeEvent({ commit }, payload) {
-      commit("REMOVE_AVAILABILITY", payload);
+    removeEvent({ commit }, { unixtime, eventID }) {
+      commit("REMOVE_AVAILABILITY", { unixtime, eventID });
     },
-    async addUserName({ commit }, content) {
-      const { username, eventID } = content;
+    async updateDatabase({ state }) {
+      await instance.put(`/${state.eventData._id}/update`, {
+        availability: state.eventData.availability,
+      });
+    },
+    async addUserName({ commit }, { username, eventID }) {
       // add user entry to database
       const response = await instance.put(`/${eventID}/adduser`, {
         user: username,
       });
-      console.log("done");
       // update local storage
       localStorage.setItem("ID", response.data.id);
       commit("ADD_USERNAME", { username, id: response.data.id });
@@ -61,10 +64,10 @@ export default createStore({
   },
   getters: {
     usernameExist(state) {
-      return isNil(state.userName);
+      return isNil(state.userID);
     },
     getUserName(state) {
-      return state.userName;
+      return state.userID;
     },
     getEventData(state) {
       return state.eventData;
