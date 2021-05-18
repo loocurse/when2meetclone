@@ -38,7 +38,7 @@ export default {
     const store = useStore();
 
     return {
-      eventRange: computed(() => store.getters.getTop),
+      eventRange: computed(() => store.getters.getTopLabel),
       userName: computed(() => store.state.userName),
       eventName: computed(() => store.getters.getEventName),
       usernameExist: computed(() => store.getters.usernameExist),

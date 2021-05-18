@@ -1,0 +1,28 @@
+http://localhost:3000/events
+
+###
+
+POST http://localhost:3000/events/add HTTP/1.1
+content-type: application/json
+
+{
+    "event_name": "TESTEVENT",
+    "start_date": "2021-04-14",
+    "end_date": "2021-04-19",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "users": []
+}
+
+###
+
+PUT http://localhost:3000/events/02985 HTTP/1.1
+
+###
+
+PUT http://localhost:3000/events/60a34052825fbb1dc9f06eff/adduser HTTP/1.1
+content-type: application/json
+
+{
+    "user": "John"
+}

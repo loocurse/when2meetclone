@@ -1,7 +1,7 @@
 const express = require("express");
 const connectDB = require("../backend/connection");
 // const userRouter = require("../backend/API");
-const user = require("./Models/User");
+const user = require("./Models/Event");
 var bodyParser = require("body-parser");
 const unix_converter = require("./utils");
 var cors = require("cors");
@@ -23,7 +23,6 @@ app.use(cors());
 
 app.get("/events", function (req, res) {
   //Show all users
-  console.log("Hello");
   user
     .find()
     .then((users) => res.json(users))
@@ -41,7 +40,6 @@ app.get("/events/:id", function (req, res) {
 
 app.post("/events/add", function (req, res) {
   //Add a new user
-  console.log(req.body);
   const event_name = req.body.event_name;
   const start_date = req.body.start_date;
   const end_date = req.body.end_date;
@@ -58,6 +56,7 @@ app.post("/events/add", function (req, res) {
     event_name,
     start_date,
     end_date,
+    users: [],
     start_time,
     end_time,
     availability,
@@ -67,6 +66,19 @@ app.post("/events/add", function (req, res) {
     .save()
     .then(() => res.json(newUser.id))
     .catch((err) => res.status(400).json("Error: " + err));
+});
+
+app.put("/events/:id/adduser", function (req, res) {
+  // Update existing availability
+  const userName = req.body.user;
+  user
+    .updateOne(
+      { _id: req.params.id },
+      { $push: { users: userName } },
+      { runValidators: true }
+    )
+    .then(() => res.json({ message: "Successfully added user" }))
+    .catch((err) => console.log(err));
 });
 
 const port = process.env.PORT || 3000;

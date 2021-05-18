@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="information">
-      <span>Bring your <br />team<br />together</span>
+      <span data-test="landing">Bring your <br />team<br />together</span>
       <router-link :to="{ name: 'newevent' }">Get Started</router-link>
     </div>
 
