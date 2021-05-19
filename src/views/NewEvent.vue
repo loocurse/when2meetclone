@@ -112,12 +112,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  font-size: 20px;
+  font-size: 18px;
   width: 60%;
   color: white;
-  margin: 30px auto;
+  margin: 20px auto;
   background-color: #247ba0;
-  padding: 50px 50px;
+  padding: 30px 30px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -131,6 +131,11 @@ export default {
     border: 0;
     background-color: #f6c467;
     cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: #f7ac21;
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -138,7 +143,12 @@ form {
   input {
     width: 200px;
     padding: 10px 10px;
+    border-radius: 15px;
+    border: 0;
     font-family: "Poppins", sans-serif;
+    &:focus {
+      outline: none;
+    }
   }
   width: 80%;
   input[type="text"] {
