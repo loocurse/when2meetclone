@@ -77,4 +77,14 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s ease-in;
+}
 </style>

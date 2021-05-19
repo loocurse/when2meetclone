@@ -2,7 +2,12 @@
   <div class="home">
     <div class="information">
       <span data-test="landing">Bring your <br />team<br />together</span>
-      <router-link :to="{ name: 'newevent' }">Get Started</router-link>
+      <transition
+        name="button-transition"
+        :duration="{ enter: 500, leave: 800 }"
+      >
+        <router-link :to="{ name: 'newevent' }">Get Started</router-link>
+      </transition>
     </div>
 
     <lottie-player
@@ -49,6 +54,11 @@ export default {
       background-color: #f6c467;
       text-decoration: none;
       text-align: center;
+      transition: all 0.2s ease;
+      &:hover {
+        background-color: #f7ac21;
+        transform: scale(1.02);
+      }
     }
   }
 
@@ -61,5 +71,22 @@ export default {
     width: 500px;
     height: 500px;
   }
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-to {
+  transform: translateX(-80%);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s ease-in;
+}
+
+.fade-leave-active {
+  transition: all 0.4s linear;
 }
 </style>

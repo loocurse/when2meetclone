@@ -8,16 +8,19 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
+    meta: { transition: "fade" },
   },
   {
     path: "/new",
     name: "newevent",
     component: NewEvent,
+    meta: { transition: "slide" },
   },
   {
     path: "/event/:id",
     name: "event",
     component: Event,
+    meta: { transition: "fade" },
   },
 ];
 
