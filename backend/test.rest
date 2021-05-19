@@ -1,6 +1,9 @@
 http://localhost:3000/events
 
 ###
+http://localhost:3000/events/60a4c35039a4df32602f3c56
+
+###
 
 POST http://localhost:3000/events/add HTTP/1.1
 content-type: application/json

@@ -1,8 +1,11 @@
 <template>
   <div
     class="hour"
-    :style="styleBinding(availability[hour].length, idx)"
-    :class="idx === 0 ? 'first' : ''"
+    :style="styleBinding(availability[hour], idx)"
+    :class="[
+      idx === 0 ? 'first' : '',
+      availability[hour].includes(userID) ? 'selected' : '',
+    ]"
     v-for="hour in day"
     :key="hour"
     @mousedown="clickHandler"
@@ -17,11 +20,12 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 export default {
-  props: ["day", "idx"],
+  props: { day: Array, idx: Number },
   setup() {
     let action = "ADD";
     const store = useStore();
     const route = useRoute();
+    const userID = store.getters.getUserID;
 
     const clickHandler = (event) => {
       event.target.classList.value.includes("selected")
@@ -49,7 +53,16 @@ export default {
       store.dispatch("updateDatabase");
     };
 
-    const styleBinding = (degree) => {
+    const styleBinding = (arr) => {
+      if (arr.includes(userID)) {
+        return {
+          "background-color": "hsl(218, 76%, 84%)",
+          border: "solid 0.1px hsl(228, 33%, 91%)",
+          "border-top": "none",
+          "border-left": "none",
+        };
+      }
+      const degree = arr.length;
       return {
         "background-color": `hsl(157, 59%, ${100 - degree * 10}%)`,
         border:
@@ -64,6 +77,7 @@ export default {
       clickHandler,
       styleBinding,
       availability: computed(() => store.getters.getAvailability),
+      userID,
     };
   },
 };
@@ -85,11 +99,4 @@ export default {
 .first {
   border-left: solid 0.1px rgb(230, 230, 230) !important;
 }
-
-/*.selected {
-  background-color: hsl(157, 59%, 50%);
-  border: solid 0.1px hsl(157, 59%, 70%);
-  border-top: none;
-  border-left: none;
-}*/
 </style>

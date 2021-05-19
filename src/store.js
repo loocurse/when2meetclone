@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import { instance } from "./api";
 import { timeLabelGenerator, getLabelTop, splitToChunks } from "./utils";
-import { isEmpty, isNil } from "lodash";
+import { isEmpty, isNil, chunk } from "lodash";
 
 export default createStore({
   state() {
@@ -66,7 +66,7 @@ export default createStore({
     usernameExist(state) {
       return isNil(state.userID);
     },
-    getUserName(state) {
+    getUserID(state) {
       return state.userID;
     },
     getEventData(state) {
@@ -79,8 +79,7 @@ export default createStore({
       if (isEmpty(state.eventData)) {
         return;
       }
-      const output = splitToChunks(state.eventData.availability, 6);
-      return output;
+      return splitToChunks(state.eventData.availability, 6);
     },
     getEventName(state) {
       return state.eventData.event_name;
