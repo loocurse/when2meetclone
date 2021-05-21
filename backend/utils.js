@@ -59,7 +59,28 @@ const IDGenerator = function () {
   return Math.random().toString(36).substr(2, 9);
 };
 
-module.exports = { create_users_time_obj, IDGenerator };
+//function to calculate number of hours per day, end_time is included, thats why + 1
+const hrs_per_day = function (start_time, end_time) {
+  return end_time - start_time + 1;
+};
+
+//function to return x number of elements from an array given the page and number of days per page
+const retrievePage = function (
+  object,
+  currentPage,
+  daysPerPage,
+  start_time,
+  end_time
+) {
+  const numberOfElementsPerPage =
+    daysPerPage * hrs_per_day(start_time, end_time);
+  const startIndex = (currentPage - 1) * numberOfElementsPerPage;
+  const endIndex = startIndex + numberOfElementsPerPage;
+  const objectArray = Object.getOwnPropertyNames(object);
+  return objectArray.slice(startIndex, endIndex);
+};
+
+module.exports = { create_users_time_obj, IDGenerator, retrievePage };
 
 // Date time examples
 // let b = new Date("2019.01.10").getTime() / 1000;
