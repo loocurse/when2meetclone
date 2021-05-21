@@ -54,6 +54,11 @@ export default {
       background-color: #f6c467;
       text-decoration: none;
       text-align: center;
+      transition: all 0.2s ease;
+      &:hover {
+        background-color: #f7ac21;
+        transform: scale(1.02);
+      }
     }
   }
   #lottie {
@@ -65,5 +70,19 @@ export default {
     width: 500px;
     height: 500px;
   }
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-leave-to {
+  transform: translateX(-80%);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s ease-in;
+}
+.fade-leave-active {
+  transition: all 0.4s linear;
 }
 </style>
