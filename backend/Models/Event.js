@@ -10,6 +10,10 @@ const eventSchema = new Schema(
       unique: false,
       minlength: 3,
     },
+    users: {
+      type: Array,
+      required: true,
+    },
     start_date: {
       type: String,
       required: true,

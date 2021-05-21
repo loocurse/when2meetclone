@@ -52,7 +52,14 @@ const seconds_converter = (time) => {
   return sum;
 };
 
-module.exports.create_users_time_obj = create_users_time_obj;
+const IDGenerator = function () {
+  // Math.random should be unique because of its seeding algorithm.
+  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+  // after the decimal.
+  return Math.random().toString(36).substr(2, 9);
+};
+
+module.exports = { create_users_time_obj, IDGenerator };
 
 // Date time examples
 // let b = new Date("2019.01.10").getTime() / 1000;

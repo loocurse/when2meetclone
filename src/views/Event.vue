@@ -1,57 +1,50 @@
 <template>
-  <div class="event-details">
-    <h1>{{ eventName }}</h1>
-    <div class="date-chooser">
-      <div class="left"><i class="fas fa-angle-left"></i></div>
-      <p>{{ eventRange }}</p>
-      <div class="right"><i class="fas fa-angle-right"></i></div>
+  <div class="test">
+    <SignIn v-show="usernameExist" />
+    <div class="event-details">
+      <h1>{{ eventName }}</h1>
+      <div class="date-chooser">
+        <div class="left"><i class="fas fa-angle-left"></i></div>
+        <p>{{ eventRange }}</p>
+        <div class="right"><i class="fas fa-angle-right"></i></div>
+      </div>
     </div>
-  </div>
 
-  <div class="content">
-    <DisplayCalendar @eventRangeHandler="eventRangeHandler" />
-    <div class="right-information">
-      <Participants />
-      <EventDetails />
+    <div class="content">
+      <Calendar :userName="userName" />
+      <div class="right-information">
+        <Participants />
+        <EventDetails />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import DisplayCalendar from "../components/DisplayCalendar.vue";
+import Calendar from "../components/Calendar.vue";
 import Participants from "../components/Participants";
 import EventDetails from "../components/EventDetails";
-import { useRoute } from "vue-router";
 import SignIn from "../components/SignIn.vue";
-import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
+import { computed } from "vue";
 
 export default {
+  emits: ["signIn"],
   components: {
-    DisplayCalendar,
+    Calendar,
     Participants,
     EventDetails,
+    SignIn,
   },
   setup() {
-    const route = useRoute();
+    const store = useStore();
 
-    const eventRange = ref("");
-
-    const eventRangeHandler = (eventrange) => {
-      eventRange.value = eventrange;
+    return {
+      eventRange: computed(() => store.getters.getTopLabel),
+      userName: computed(() => store.state.userName),
+      eventName: computed(() => store.getters.getEventName),
+      usernameExist: computed(() => store.getters.usernameExist),
     };
-
-    const getEventName = (id) => {
-      return "Project Meeting";
-    };
-
-    const signIn = ({ name, password }) => {
-      console.log(name);
-    };
-
-    const signedInBool = ref(false);
-    const eventName = getEventName(route.params.id);
-
-    return { eventName, signIn, eventRange, eventRangeHandler };
   },
 };
 </script>
@@ -85,5 +78,15 @@ export default {
 .content {
   display: flex;
   justify-content: space-between;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.fade-enter-from,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

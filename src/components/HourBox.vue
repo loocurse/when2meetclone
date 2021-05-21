@@ -1,10 +1,13 @@
 <template>
   <div
     class="hour"
-    :style="styleBinding(Data[hour].length)"
-    :class="idx === 0 ? 'first' : ''"
+    :style="styleBinding(availability[hour], idx)"
+    :class="[
+      idx === 0 ? 'first' : '',
+      availability[hour].includes(userID) ? 'selected' : '',
+    ]"
     v-for="hour in day"
-    :key="`${hour}`"
+    :key="hour"
     @mousedown="clickHandler"
     @mousemove.prevent="dragHandler"
     :id="hour"
@@ -12,51 +15,70 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 export default {
-  props: ["day", "idx", "Data"],
-  setup(props, context) {
-    let setting = true;
+  props: { day: Array, idx: Number },
+  setup() {
+    let action = "ADD";
+    const store = useStore();
+    const route = useRoute();
+    const userID = store.state.userID;
 
     const clickHandler = (event) => {
-      if (event.target.classList.value.includes("selected")) {
-        setting = false;
-        context.emit("removeEvent", event);
-      } else {
-        setting = true;
-        context.emit("addEvent", event);
-      }
+      event.target.classList.value.includes("selected")
+        ? (action = "REMOVE")
+        : (action = "ADD");
+      UPDATE_AVAILABILITY(action, event);
     };
 
     const dragHandler = (event) => {
       let mouseClickedDown = event.buttons === 1;
       if (mouseClickedDown) {
-        setting
-          ? context.emit("addEvent", event)
-          : context.emit("removeEvent", event);
+        UPDATE_AVAILABILITY(action, event);
       }
     };
 
-    const styleBinding = (degree) => {
-      if (degree === 1) {
-        return {
-          "background-color": `hsl(157, 59%, 90%)`,
-          border: "solid 0.1px hsl(157, 59%, 60%)",
-          "border-top": "none",
-          "border-left": "none",
-        };
-      } else if (degree === 2) {
-        return {
-          "background-color": `hsl(157, 59%, 80%)`,
-          border: "solid 0.1px hsl(157, 59%, 60%)",
-          "border-top": "none",
-          "border-left": "none",
-        };
-      } else {
-        return;
+    const UPDATE_AVAILABILITY = (action, event) => {
+      let unixtime = event.target.id;
+      if (action === "ADD") {
+        event.target.classList.add("selected");
+        store.dispatch("addEvent", { unixtime, eventID: route.params.id });
+      } else if (action === "REMOVE") {
+        event.target.classList.remove("selected");
+        store.dispatch("removeEvent", { unixtime, eventID: route.params.id });
       }
+      store.dispatch("updateDatabase");
     };
 
-    return { dragHandler, clickHandler, styleBinding };
+    const styleBinding = (arr) => {
+      if (arr.includes(userID)) {
+        return {
+          "background-color": "hsl(218, 76%, 84%)",
+          border: "solid 0.1px hsl(228, 33%, 91%)",
+          "border-top": "none",
+          "border-left": "none",
+        };
+      }
+      const degree = arr.length;
+      return {
+        "background-color": `hsl(157, 59%, ${100 - degree * 10}%)`,
+        border:
+          degree === 0 ? "" : `solid 0.1px hsl(157, 59%, ${90 - degree * 10}%)`,
+        "border-top": "none",
+        "border-left": "none",
+      };
+    };
+
+    return {
+      dragHandler,
+      clickHandler,
+      styleBinding,
+      availability: computed(() => store.getters.getAvailability),
+      userID,
+    };
   },
 };
 </script>
@@ -69,19 +91,12 @@ export default {
   background-color: white;
   border-top: none;
   border-left: none;
-  /*&:nth-child(2) {
-    border-top: solid 0.1px rgb(230, 230, 230);
-  }*/
+  &:nth-child(2) {
+    border-top: solid 0.1px rgb(230, 230, 230) !important;
+  }
 }
 
 .first {
   border-left: solid 0.1px rgb(230, 230, 230) !important;
-}
-
-.selected {
-  background-color: hsl(157, 59%, 50%);
-  border: solid 0.1px hsl(157, 59%, 50%);
-  border-top: none;
-  border-left: none;
 }
 </style>

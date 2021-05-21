@@ -10,7 +10,11 @@
         <router-link :to="{ name: 'newevent' }">Create Event</router-link>
       </div>
     </div>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -69,6 +73,10 @@ body {
       border-radius: 30px;
       background-color: #f6c467;
       text-decoration: none;
+      transition: 0.2s ease-in;
+      &:hover {
+        background-color: #f7ac21;
+      }
     }
   }
 }

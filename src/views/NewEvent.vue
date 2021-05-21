@@ -1,36 +1,40 @@
 <template>
-  <div class="container">
-    <form>
-      <div class="row">
-        <label for="event-name">Event Name</label>
-        <input
-          type="text"
-          v-model="name"
-          placeholder="Prototype 3 feedback discussion"
-        />
-      </div>
-      <div class="row">
-        <label for="sdate">Start date</label>
-        <input type="date" name="sdate" id="" v-model="sdate" />
-      </div>
-      <div class="row">
-        <label for="edate">End date</label>
-        <input type="date" name="edate" id="" v-model="edate" />
-      </div>
-      <div class="row">
-        <label for="stime">Start Time</label>
-        <input type="time" name="stime" id="" v-model="stime" />
-      </div>
-      <div class="row">
-        <label for="stime">End Time</label>
-        <input type="time" name="etime" id="" v-model="etime" />
-      </div>
-    </form>
-    <button @click="submitHandler">Submit</button>
-  </div>
+  <transition>
+    <div class="container">
+      <form>
+        <div class="row">
+          <label for="event-name">Event Name</label>
+          <input
+            type="text"
+            v-model="name"
+            placeholder="Prototype 3 feedback discussion"
+          />
+        </div>
+        <div class="row">
+          <label for="sdate">Start date</label>
+          <input type="date" name="sdate" id="" v-model="sdate" />
+        </div>
+        <div class="row">
+          <label for="edate">End date</label>
+          <input type="date" name="edate" id="" v-model="edate" />
+        </div>
+        <div class="row">
+          <label for="stime">Start Time</label>
+          <input type="time" name="stime" id="" v-model="stime" />
+        </div>
+        <div class="row">
+          <label for="stime">End Time</label>
+          <input type="time" name="etime" id="" v-model="etime" />
+        </div>
+      </form>
+      <button @click="submitHandler">Submit</button>
+    </div>
+  </transition>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -53,7 +57,7 @@ export default {
     this.sdate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
-    a.setDate(a.getDate() + 7);
+    a.setDate(a.getDate() + 5);
     this.edate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
       a.getDate()
     )}`;
@@ -62,6 +66,7 @@ export default {
     async submitHandler() {
       // TODO form validation 1. ensure date and time are far away 2. ensure event name is not empty
       // convert datetime
+      let eventID;
 
       const eventDetails = {
         event_name: this.name,
@@ -70,23 +75,16 @@ export default {
         start_time: this.stime,
         end_time: this.etime,
       };
-      console.table(eventDetails);
-      let response = await fetch("http://localhost:3000/events/add", {
-        mode: "no-cors",
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(eventDetails),
-      });
-
-      let result = await response.json();
-      console.log(result);
+      const postResponse = await axios.post(
+        "http://localhost:3000/events/add",
+        eventDetails
+      );
+      eventID = postResponse.data;
 
       this.clearForm();
       // redirect user
       // backend endpoint to create new event and get event id
-      this.$router.push({ name: "event", params: { id: 100 } });
+      this.$router.push({ name: "event", params: { id: eventID } });
     },
     clearForm() {
       this.name = "";
@@ -114,25 +112,30 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  font-size: 24px;
-  width: 50%;
+  font-size: 18px;
+  width: 60%;
   color: white;
-  margin: 30px auto;
+  margin: 20px auto;
   background-color: #247ba0;
-  padding: 50px 100px;
+  padding: 30px 30px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   button {
     padding: 10px 30px;
-    margin-top: 20px;
+    margin-top: 30px;
     color: #494949;
     font-size: 20px;
     border-radius: 30px;
     border: 0;
     background-color: #f6c467;
     cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background-color: #f7ac21;
+      transform: scale(1.02);
+    }
   }
 }
 
@@ -140,7 +143,12 @@ form {
   input {
     width: 200px;
     padding: 10px 10px;
+    border-radius: 15px;
+    border: 0;
     font-family: "Poppins", sans-serif;
+    &:focus {
+      outline: none;
+    }
   }
   width: 80%;
   input[type="text"] {
@@ -152,8 +160,19 @@ form {
 
 .row {
   display: flex;
-  margin-top: 20px;
+  margin-top: 15px;
   justify-content: space-between;
   align-items: center;
+}
+
+.fade-enter-from {
+  transform: translateX(200%);
+}
+.fade-leave-to {
+  transform: translateX(-100%);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.4s linear;
 }
 </style>
