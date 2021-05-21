@@ -4,8 +4,13 @@ const connectDB = require("./connection");
 const user = require("./models/Event");
 var bodyParser = require("body-parser");
 //const unix_converter = require("./utils");
-const { IDGenerator, create_users_time_obj } = require("./utils.js");
+const {
+  IDGenerator,
+  create_users_time_obj,
+  retrievePage,
+} = require("./utils.js");
 var cors = require("cors");
+const { json } = require("express");
 
 require("dotenv").config;
 
@@ -31,11 +36,61 @@ app.get("/events", function (req, res) {
 });
 
 app.get("/events/:id", function (req, res) {
-  //Show 1st page events
-  //Send back, list of dates of first page, user_time object filtered for first 7 days
+  //Finds users by ID
   user
     .findById(req.params.id)
     .then((doc) => res.json(doc))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+app.get("/events/:id/1", function (req, res) {
+  //Show 1st page of the user chosen
+  user
+    .findById(req.params.id)
+    .then((doc) => {
+      let pageTimeSlots = retrievePage(
+        doc.availability,
+        1, // page number
+        6, // number of days per page
+        parseInt(doc.start_time),
+        parseInt(doc.end_time)
+      );
+      res.json(pageTimeSlots);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+app.get("/events/:id/2", function (req, res) {
+  //Show 2nd page of the user chosen
+  user
+    .findById(req.params.id)
+    .then((doc) => {
+      let pageTimeSlots = retrievePage(
+        doc.availability,
+        2, //page number
+        6, //number of days per page
+        parseInt(doc.start_time),
+        parseInt(doc.end_time)
+      );
+      res.json(pageTimeSlots);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+app.get("/events/:id/3", function (req, res) {
+  //Show 3rd page of the user chosen
+  user
+    .findById(req.params.id)
+    .then((doc) => {
+      let pageTimeSlots = retrievePage(
+        doc.availability,
+        3, //page number
+        6, //number of days per page
+        parseInt(doc.start_time),
+        parseInt(doc.end_time)
+      );
+      res.json(pageTimeSlots);
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 });
 

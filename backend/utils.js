@@ -43,11 +43,11 @@ const create_user_time_array_hr = (
     }
   }
 };
-//Convert "HH:MM:SS" time format to seconds
+//Convert "HH:MM" time format to seconds
 const seconds_converter = (time) => {
   const hour = parseInt(time.slice(0, 2) * 3600);
   const minute = parseInt(time.slice(3, 5)) * 60;
-  //const second = parseInt(time.slice(6, 8));
+  //   const second = parseInt(time.slice(6, 8));
   const sum = hour + minute;
   return sum;
 };
@@ -59,7 +59,40 @@ const IDGenerator = function () {
   return Math.random().toString(36).substr(2, 9);
 };
 
-module.exports = { create_users_time_obj, IDGenerator };
+//function to calculate number of hours per day, end_time is included, thats why + 1
+const hrs_per_day = function (start_time, end_time) {
+  return end_time - start_time + 1;
+};
+
+//function to return x number of elements from an array given the page and number of days per page
+const retrievePage = function (
+  object,
+  currentPage,
+  daysPerPage,
+  start_time,
+  end_time
+) {
+  const numberOfElementsPerPage =
+    daysPerPage * hrs_per_day(start_time, end_time);
+  const startIndex = (currentPage - 1) * numberOfElementsPerPage;
+  const endIndex = startIndex + numberOfElementsPerPage;
+  const objectArray = Object.getOwnPropertyNames(object);
+  if (endIndex > objectArray.length) {
+    const difference = endIndex - objectArray.length;
+    return objectArray.slice(startIndex, startIndex + difference);
+  }
+  console.log(
+    "Details on get request :id/1/2/3:  (hrs per page: " +
+      numberOfElementsPerPage,
+    " start Index: " + startIndex,
+    " end index: " + endIndex,
+    " hrs per day: " + hrs_per_day(start_time, end_time),
+    " total avail hrs: " + objectArray.length + ")"
+  );
+  return objectArray.slice(startIndex, endIndex);
+};
+
+module.exports = { create_users_time_obj, IDGenerator, retrievePage };
 
 // Date time examples
 // let b = new Date("2019.01.10").getTime() / 1000;
