@@ -6,9 +6,6 @@
         <router-link to="/" class="underline">About When2meet</router-link>
         <router-link to="/" class="underline">How it works</router-link>
       </div>
-      <div class="second-nav">
-        <router-link :to="{ name: 'newevent' }">Create Event</router-link>
-      </div>
     </div>
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
@@ -22,6 +19,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 html,
 body {

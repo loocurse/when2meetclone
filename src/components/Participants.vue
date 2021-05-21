@@ -30,7 +30,7 @@ export default {
 .participants {
   border-radius: 20px;
   background-color: white;
-  width: 200px;
+  width: 100%;
   padding: 10px 20px;
   h3 {
     font-size: 20px;

@@ -57,27 +57,27 @@ export default {
   align-items: center;
   h1 {
     text-transform: uppercase;
-    font-size: 24px;
+    font-size: 2rem;
     margin-right: 40px;
   }
   .date-chooser {
     display: flex;
     align-items: center;
-    font-size: 30px;
     color: rgb(99, 99, 99);
     p {
       padding: 0 20px;
-      font-size: 20px;
+      font-size: 1.8rem;
     }
     .left,
     .right {
       cursor: pointer;
+      font-size: 2rem;
     }
   }
 }
 .content {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .fade-enter-active,

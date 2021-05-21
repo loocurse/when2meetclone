@@ -92,7 +92,7 @@ export default {
 
 <style lang="scss" scoped>
 .hour {
-  width: 100px;
+  width: 7rem;
   height: 36px;
   border: solid 0.1px rgb(230, 230, 230);
   background-color: white;

@@ -112,7 +112,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  font-size: 18px;
   width: 60%;
   color: white;
   margin: 20px auto;
@@ -140,8 +139,11 @@ export default {
 }
 
 form {
+  label {
+    font-size: 1.5rem;
+  }
   input {
-    width: 200px;
+    width: 250px;
     padding: 10px 10px;
     border-radius: 15px;
     border: 0;

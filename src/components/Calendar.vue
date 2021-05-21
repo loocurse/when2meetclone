@@ -60,18 +60,22 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   background-color: #f7f7f7;
+  margin-right: 30px;
 }
 
 .timelabels {
   color: #686868;
-  padding-top: 70px;
+  padding-top: 80px;
   padding-bottom: 25px;
   display: flex;
   align-self: stretch;
   flex-direction: column;
   justify-content: space-between;
-  margin-right: 10px;
-  font-size: 12px;
+  margin-right: 15px;
+  span {
+    font-size: 0.8rem;
+  }
+
   text-align: right;
   white-space: nowrap;
 }
@@ -87,7 +91,6 @@ export default {
 .daylabel {
   color: #686868;
   top: -35px;
-  font-size: 10px;
   text-align: center;
   align-self: center;
   display: inline-block;
@@ -97,10 +100,10 @@ export default {
   span {
     overflow-x: scroll;
     white-space: nowrap;
-    font-size: 20px;
+    font-size: 1.5rem;
   }
   p {
-    font-size: 12px;
+    font-size: 1rem;
     padding: 0;
     margin: 0;
     margin-top: 5px;

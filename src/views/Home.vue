@@ -39,7 +39,7 @@ export default {
     display: flex;
     flex-direction: column;
     span {
-      font-size: 70px;
+      font-size: 5.2rem;
       font-weight: bold;
       line-height: 1.2;
     }
@@ -67,8 +67,8 @@ export default {
     left: 100%;
     top: 50%;
     transform: translate(-100%, -50%);
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
   }
 }
 .fade-enter-from,

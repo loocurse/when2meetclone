@@ -49,7 +49,7 @@ export default {
 .event-deets {
   margin-top: 20px;
   padding: 10px 20px;
-  width: 200px;
+  width: 100%;
   border-radius: 20px;
   background-color: white;
   h3 {
