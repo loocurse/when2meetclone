@@ -1,18 +1,20 @@
 <template>
-  <div class="outer">
-    <div class="timelabels">
-      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
-    </div>
-    <div class="calendar">
-      <div class="day" v-for="(day, idx) in result" :key="day">
-        <div class="daylabel">
-          <span>{{ getDate(day[0]) }}</span>
-          <p>{{ getDay(day[0]) }}</p>
+  <transition name="fade" appear>
+    <div class="outer">
+      <div class="timelabels">
+        <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
+      </div>
+      <div class="calendar">
+        <div class="day" v-for="(day, idx) in result" :key="day">
+          <div class="daylabel">
+            <span>{{ getDate(day[0]) }}</span>
+            <p>{{ getDay(day[0]) }}</p>
+          </div>
+          <HourBox :day="day" :idx="idx" />
         </div>
-        <HourBox :day="day" :idx="idx" />
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -108,5 +110,14 @@ export default {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(10, 1fr);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 3s linear;
 }
 </style>

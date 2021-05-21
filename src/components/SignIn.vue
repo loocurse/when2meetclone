@@ -1,22 +1,24 @@
 <template>
-  <div class="backdrop">
-    <div class="signin-form">
-      <h1>Sign In</h1>
-      <form @submit.prevent="handleSubmit">
-        <div class="row">
-          <label for="name">Name: </label>
-          <input type="text" name="name" v-model="name" />
-        </div>
-        <!--<div class="row">
+  <transition name="fade" appear>
+    <div class="backdrop">
+      <div class="signin-form">
+        <h1>Sign In</h1>
+        <form @submit.prevent="handleSubmit">
+          <div class="row">
+            <label for="name">Name: </label>
+            <input type="text" name="name" v-model="name" />
+          </div>
+          <!--<div class="row">
           <label for="password">Password (optional):</label>
           <input type="password" name="password" v-model="password" />
         </div>-->
-        <div class="row">
-          <button>Sign In</button>
-        </div>
-      </form>
+          <div class="row">
+            <button>Sign In</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -90,5 +92,14 @@ h1 {
     margin-bottom: 0;
     cursor: pointer;
   }
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 2s ease-in;
 }
 </style>

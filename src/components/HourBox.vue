@@ -25,7 +25,7 @@ export default {
     let action = "ADD";
     const store = useStore();
     const route = useRoute();
-    const userID = store.getters.getUserID;
+    const userID = store.state.userID;
 
     const clickHandler = (event) => {
       event.target.classList.value.includes("selected")

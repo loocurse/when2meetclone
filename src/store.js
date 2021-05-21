@@ -7,7 +7,7 @@ export default createStore({
   state() {
     return {
       eventData: {},
-      userID: localStorage.getItem("ID"),
+      userID: "",
     };
   },
   mutations: {
@@ -35,11 +35,15 @@ export default createStore({
       state.eventData.users.push({ id, username });
       state.userID = id;
     },
+    RETRIEVE_USERID(state, eventID) {
+      state.userID = localStorage.getItem(eventID);
+    },
   },
   actions: {
     async fetchAvailabilities({ commit }, eventID) {
       const response = await instance.get(eventID);
       commit("FETCH_AVAILABILITY", response.data);
+      commit("RETRIEVE_USERID", response.data._id);
     },
     addEvent({ commit }, { unixtime, eventID }) {
       commit("ADD_AVAILABILITY", { unixtime, eventID });
@@ -58,7 +62,7 @@ export default createStore({
         user: username,
       });
       // update local storage
-      localStorage.setItem("ID", response.data.id);
+      localStorage.setItem(eventID, response.data.id);
       commit("ADD_USERNAME", { username, id: response.data.id });
     },
   },
