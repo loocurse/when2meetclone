@@ -18,6 +18,7 @@
 import { useStore } from "vuex";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
+import { ActionTypes } from "../store/actions";
 
 export default {
   props: { day: Array, idx: Number },
@@ -45,12 +46,18 @@ export default {
       let unixtime = event.target.id;
       if (action === "ADD") {
         event.target.classList.add("selected");
-        store.dispatch("addEvent", { unixtime, eventID: route.params.id });
+        store.dispatch(ActionTypes.addEvent, {
+          unixtime,
+          eventID: route.params.id,
+        });
       } else if (action === "REMOVE") {
         event.target.classList.remove("selected");
-        store.dispatch("removeEvent", { unixtime, eventID: route.params.id });
+        store.dispatch(ActionTypes.removeEvent, {
+          unixtime,
+          eventID: route.params.id,
+        });
       }
-      store.dispatch("updateDatabase");
+      store.dispatch(ActionTypes.updateDatabase);
     };
 
     const styleBinding = (arr) => {

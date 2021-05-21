@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getMonths } from "../utils.js";
+import { getMonths } from "../utils";
 export default {
   data() {
     return {

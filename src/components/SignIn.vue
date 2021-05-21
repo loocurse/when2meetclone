@@ -25,6 +25,7 @@
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import { ActionTypes } from "../store/actions"
 
 export default {
   setup() {
@@ -33,7 +34,7 @@ export default {
     const name = ref("");
     const password = ref("");
     const handleSubmit = () => {
-      store.dispatch("addUserName", {
+      store.dispatch(ActionTypes.addUserName, {
         username: name.value,
         eventID: route.params.id,
       });

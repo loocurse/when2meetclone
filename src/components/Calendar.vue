@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { ActionTypes } from "@/store/actions";
 import { getDate, getDay } from "../utils";
 import HourBox from "./HourBox.vue";
 import { useRoute } from "vue-router";
@@ -30,7 +31,7 @@ export default {
     const route = useRoute();
     const store = useStore();
 
-    store.dispatch("fetchAvailabilities", route.params.id);
+    store.dispatch(ActionTypes.loadAvailabilities, route.params.id);
 
     return {
       availability: computed(() => store.getters.getAvailability),

@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("../backend/connection");
+const connectDB = require("./connection");
 // const userRouter = require("../backend/API");
 const user = require("./models/Event");
 var bodyParser = require("body-parser");
