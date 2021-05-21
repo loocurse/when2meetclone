@@ -43,11 +43,11 @@ const create_user_time_array_hr = (
     }
   }
 };
-//Convert "HH:MM:SS" time format to seconds
+//Convert "HH:MM" time format to seconds
 const seconds_converter = (time) => {
   const hour = parseInt(time.slice(0, 2) * 3600);
   const minute = parseInt(time.slice(3, 5)) * 60;
-  //const second = parseInt(time.slice(6, 8));
+  //   const second = parseInt(time.slice(6, 8));
   const sum = hour + minute;
   return sum;
 };

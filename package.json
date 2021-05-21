@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "express": "^4.17.1",
     "joi": "^17.4.0",
+    "json-stringify": "^1.0.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.8",
     "vue": "^3.0.0",

@@ -29,8 +29,15 @@ app.get("/events", function (req, res) {
 });
 
 app.get("/events/:id", function (req, res) {
-  //Show 1st page events
-  //Send back, list of dates of first page, user_time object filtered for first 7 days
+  //Finds users by ID
+  user
+    .findById(req.params.id)
+    .then((doc) => res.json(doc))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+app.get("/events/:id/1", function (req, res) {
+  //Show 1st page of the user chosen
   user
     .findById(req.params.id)
     .then((doc) => res.json(doc))
