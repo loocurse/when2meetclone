@@ -77,6 +77,18 @@ const retrievePage = function (
   const startIndex = (currentPage - 1) * numberOfElementsPerPage;
   const endIndex = startIndex + numberOfElementsPerPage;
   const objectArray = Object.getOwnPropertyNames(object);
+  if (endIndex > objectArray.length) {
+    const difference = endIndex - objectArray.length;
+    return objectArray.slice(startIndex, startIndex + difference);
+  }
+  console.log(
+    "Details on get request :id/1/2/3:  (hrs per page: " +
+      numberOfElementsPerPage,
+    " start Index: " + startIndex,
+    " end index: " + endIndex,
+    " hrs per day: " + hrs_per_day(start_time, end_time),
+    " total avail hrs: " + objectArray.length + ")"
+  );
   return objectArray.slice(startIndex, endIndex);
 };
 
