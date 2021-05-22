@@ -52,9 +52,17 @@ function formatAMPM(date: Date) {
   const strTime = hours + ":" + minutes + " " + ampm;
   return strTime;
 }
-const timeLabelGenerator = function (firstDay: number[]): string[] {
-  const firstTime = new Date(firstDay[0] * 1000 - 28800000);
-  const lastTime = new Date(firstDay[firstDay.length - 1] * 1000 - 28800000);
+const dateParser = function (dateString: string) {
+  // Parse dates with format "09:00"
+  const a = new Date();
+  const [hour, minute] = dateString.split(":");
+  a.setHours(+hour);
+  a.setMinutes(+minute);
+  return a;
+};
+const timeLabelGenerator = function (start_time: string, end_time: string) {
+  const firstTime = dateParser(start_time);
+  const lastTime = dateParser(end_time);
   const hours = getHours(firstTime, lastTime);
   return hours.map(formatAMPM);
 };

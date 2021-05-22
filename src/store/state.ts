@@ -24,9 +24,11 @@ export interface User {
 export interface State {
   eventData: EventData | any;
   userID: string | null;
+  currentView: string[];
 }
 
 export const state: State = {
   eventData: {},
   userID: "",
+  currentView: [],
 };

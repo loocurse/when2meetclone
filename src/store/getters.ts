@@ -41,7 +41,10 @@ export const getters: GetterTree<State, State> & Getters = {
     if (isEmpty(state.eventData)) {
       return [];
     }
-    return timeLabelGenerator(getters.getSplitAvailabilities[0]);
+    return timeLabelGenerator(
+      state.eventData.start_time,
+      state.eventData.end_time
+    );
   },
   getTopLabel(state, getters) {
     const avail = state.eventData.availability;

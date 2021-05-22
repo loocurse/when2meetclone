@@ -111,19 +111,19 @@ export default {
         this.error.name = "Event name cannot be empty";
         formStatus = false;
       }
-      if (this.sdate) {
+      if (!this.sdate) {
         this.error.sdate = "Start date cannot be empty";
         formStatus = false;
       }
-      if (this.edate) {
+      if (!this.edate) {
         this.error.edate = "End date cannot be empty";
         formStatus = false;
       }
-      if (this.stime) {
+      if (!this.stime) {
         this.error.stime = "Start time cannot be empty";
         formStatus = false;
       }
-      if (this.etime) {
+      if (!this.etime) {
         this.error.etime = "End time cannot be empty";
         formStatus = false;
       }
@@ -140,6 +140,7 @@ export default {
         formStatus = false;
         this.error.etime = "Start time later than end time";
       }
+      return formStatus;
     },
     clearForm() {
       this.name = "";
