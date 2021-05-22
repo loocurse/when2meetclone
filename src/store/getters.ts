@@ -10,8 +10,8 @@ export type Getters = {
   getAvailability(state: State): Availability;
   getSplitAvailabilities(state: State): any;
   getEventName(state: State): string;
-  getTimeLabels(state: State, getters: any): string[] | undefined;
-  getTopLabel(state: State, getters: any): string | undefined;
+  getTimeLabels(state: State): string[];
+  getTopLabel(state: State): string;
   getParticipantList(state: State): User[];
 };
 
@@ -37,7 +37,7 @@ export const getters: GetterTree<State, State> & Getters = {
   getEventName(state) {
     return state.eventData.event_name;
   },
-  getTimeLabels(state, getters) {
+  getTimeLabels(state) {
     if (isEmpty(state.eventData)) {
       return [];
     }
@@ -46,15 +46,11 @@ export const getters: GetterTree<State, State> & Getters = {
       state.eventData.end_time
     );
   },
-  getTopLabel(state, getters) {
-    const avail = state.eventData.availability;
-    if (isNil(avail)) {
-      return;
+  getTopLabel(state) {
+    if (isEmpty(state.eventData)) {
+      return "";
     }
-    return getLabelTop(
-      Object.keys(avail)[0],
-      Object.keys(avail)[Object.keys(avail).length - 1]
-    );
+    return getLabelTop(state.eventData.start_date, state.eventData.end_date);
   },
   getParticipantList(state) {
     if (isEmpty(state.eventData)) {

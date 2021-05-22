@@ -71,8 +71,8 @@ const timeLabelGenerator = function (start_time: string, end_time: string) {
  * @param {array} title - The first array of the list of days
  */
 const getLabelTop = function (start: string, end: string): string {
-  const first = new Date(Number(start) * 1000 - 28800000);
-  const last = new Date(Number(end) * 1000 - 28800000);
+  const first = new Date(start);
+  const last = new Date(end);
   return (
     first.getDate() +
     " " +
