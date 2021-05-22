@@ -1,21 +1,19 @@
 <template>
-  <div class="test">
-    <SignIn v-show="usernameExist" />
-    <div class="event-details">
-      <h1>{{ eventName }}</h1>
-      <div class="date-chooser">
-        <div class="left"><i class="fas fa-angle-left"></i></div>
-        <p>{{ eventRange }}</p>
-        <div class="right"><i class="fas fa-angle-right"></i></div>
-      </div>
+  <SignIn v-show="usernameExist" />
+  <div class="event-details">
+    <h1>{{ eventName }}</h1>
+    <div class="date-chooser">
+      <div class="left"><i class="fas fa-angle-left"></i></div>
+      <p>{{ eventRange }}</p>
+      <div class="right"><i class="fas fa-angle-right"></i></div>
     </div>
+  </div>
 
-    <div class="content">
-      <Calendar :userName="userName" />
-      <div class="right-information">
-        <Participants />
-        <EventDetails />
-      </div>
+  <div class="content">
+    <Calendar :userName="userName" />
+    <div class="right-information">
+      <Participants />
+      <EventDetails />
     </div>
   </div>
 </template>

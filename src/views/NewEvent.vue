@@ -5,27 +5,33 @@
         <div class="row">
           <label for="event-name">Event Name</label>
           <input
+            data-test="eventname"
             type="text"
             v-model="name"
             placeholder="Prototype 3 feedback discussion"
           />
         </div>
+        <p v-if="error.name">{{ error.name }}</p>
         <div class="row">
           <label for="sdate">Start date</label>
           <input type="date" name="sdate" id="" v-model="sdate" />
         </div>
+        <p v-if="error.sdate">{{ error.sdate }}</p>
         <div class="row">
           <label for="edate">End date</label>
           <input type="date" name="edate" id="" v-model="edate" />
         </div>
+        <p v-if="error.edate">{{ error.edate }}y</p>
         <div class="row">
           <label for="stime">Start Time</label>
           <input type="time" name="stime" id="" v-model="stime" />
         </div>
+        <p v-if="error.stime">{{ error.stime }}</p>
         <div class="row">
           <label for="stime">End Time</label>
           <input type="time" name="etime" id="" v-model="etime" />
         </div>
+        <p v-if="error.etime">{{ error.etime }}</p>
       </form>
       <button @click="submitHandler">Submit</button>
     </div>
@@ -43,6 +49,13 @@ export default {
       edate: "",
       stime: "09:00",
       etime: "17:00",
+      error: {
+        name: "",
+        sdate: "",
+        edate: "",
+        stime: "",
+        etime: "",
+      },
     };
   },
   mounted() {
@@ -75,6 +88,10 @@ export default {
         start_time: this.stime,
         end_time: this.etime,
       };
+      const formValidation = this.validateForm();
+      if (!formValidation) {
+        return;
+      }
       const postResponse = await axios.post(
         "http://localhost:3000/events/add",
         eventDetails
@@ -82,9 +99,47 @@ export default {
       eventID = postResponse.data;
 
       this.clearForm();
+
       // redirect user
       // backend endpoint to create new event and get event id
       this.$router.push({ name: "event", params: { id: eventID } });
+    },
+    validateForm() {
+      // validate blanks
+      let formStatus = true;
+      if (this.name.length === 0) {
+        this.error.name = "Event name cannot be empty";
+        formStatus = false;
+      }
+      if (this.sdate) {
+        this.error.sdate = "Start date cannot be empty";
+        formStatus = false;
+      }
+      if (this.edate) {
+        this.error.edate = "End date cannot be empty";
+        formStatus = false;
+      }
+      if (this.stime) {
+        this.error.stime = "Start time cannot be empty";
+        formStatus = false;
+      }
+      if (this.etime) {
+        this.error.etime = "End time cannot be empty";
+        formStatus = false;
+      }
+
+      // start date cannot be before end date
+      const startDate = new Date(this.sdate).getTime();
+      const endDate = new Date(this.edate).getTime();
+      if (startDate > endDate) {
+        this.error.edate = "Start date later than end date";
+        formStatus = false;
+      }
+      // start time cannot be before end time
+      if (this.etime.split(":")[0] - this.stime.split(":")[0] < 0) {
+        formStatus = false;
+        this.error.etime = "Start time later than end time";
+      }
     },
     clearForm() {
       this.name = "";
@@ -92,19 +147,6 @@ export default {
       this.edate = "";
       this.stime = "";
       this.etime = "";
-    },
-    convertDate(date) {
-      let output = new Date();
-      const [year, month, day] = date.split("-");
-      output.setYear(year);
-      output.setMonth(month - 1);
-      output.setDate(day);
-      return output;
-    },
-    validateDate() {
-      let sdate = this.convertDate(this.sdate);
-      let edate = this.convertDate(this.edate);
-      return sdate.getTime() - edate.getTime() < 0;
     },
   },
 };
@@ -139,6 +181,9 @@ export default {
 }
 
 form {
+  p {
+    color: red;
+  }
   label {
     font-size: 1.5rem;
   }

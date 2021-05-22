@@ -12,11 +12,13 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "@types/jest"
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
+        "./*"
       ]
     },
     "lib": [
@@ -26,14 +28,15 @@
       "scripthost"
     ]
   },
+  
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+    "tests/**/*.tsx"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/test/Home.test.ts"
   ]
 }
