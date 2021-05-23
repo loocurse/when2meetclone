@@ -6,14 +6,10 @@ export interface EventData {
   end_date: string;
   start_time: string;
   end_time: string;
-  availability: { [key: string]: Availability[] };
+  availability: { [key: string]: string[] };
   createdAt: string;
   updatedAt: string;
   __v: number;
-}
-
-export interface Availability {
-  [key: string]: string[];
 }
 
 export interface User {
@@ -22,14 +18,14 @@ export interface User {
 }
 
 export interface State {
-  eventData: EventData | any;
-  userID: string | null;
+  eventData: EventData;
+  userID: string;
   currentView: string[];
   currentHover: string[];
 }
 
 export const state: State = {
-  eventData: {},
+  eventData: <EventData>{},
   userID: "",
   currentView: [],
   currentHover: [],

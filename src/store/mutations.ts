@@ -1,5 +1,6 @@
 import { MutationTree } from "vuex";
 import { State, EventData } from "./state";
+import { User } from "./state";
 
 export enum MutationType {
   FetchAvailability = "FETCH_AVAILABILITY",
@@ -12,9 +13,12 @@ export enum MutationType {
 
 export type Mutations = {
   [MutationType.FetchAvailability](state: State, data: EventData): void;
-  [MutationType.AddAvailability](state: State, content: any): void;
+  [MutationType.AddAvailability](
+    state: State,
+    content: { unixtime: string; eventID: string }
+  ): void;
   [MutationType.RemoveAvailability](state: State, content: any): void;
-  [MutationType.AddUserName](state: State, content: any): void;
+  [MutationType.AddUserName](state: State, user: User): void;
   [MutationType.RetrieveUserID](state: State, content: any): void;
   [MutationType.updateHover](state: State, unixtime: string): void;
 };
@@ -39,15 +43,20 @@ export const mutations: MutationTree<State> & Mutations = {
       return val !== userID;
     });
   },
-  [MutationType.AddUserName](state, content) {
-    const { username, id } = content;
-    state.eventData.users.push({ id, username });
-    state.userID = id;
+  [MutationType.AddUserName](state, user) {
+    state.eventData.users.push(user);
+    state.userID = user.id;
   },
   [MutationType.RetrieveUserID](state, eventID) {
-    state.userID = localStorage.getItem(eventID);
+    const userStorage = localStorage.getItem(eventID);
+    if (userStorage != null) {
+      state.userID = userStorage;
+    }
   },
   [MutationType.updateHover](state, unixtime) {
+    if (unixtime === "MouseOut") {
+      state.currentHover = state.eventData.users.map((user) => user.id);
+    }
     state.currentHover = state.eventData.availability[unixtime];
   },
 };

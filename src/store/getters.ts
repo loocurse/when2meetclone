@@ -1,5 +1,5 @@
 import { GetterTree } from "vuex";
-import { Availability, EventData, State, User } from "./state";
+import { EventData, State, User } from "./state";
 import { isEmpty, isNil, chunk } from "lodash";
 import { timeLabelGenerator, getLabelTop, splitToChunks } from "../utils";
 
@@ -7,7 +7,7 @@ export type Getters = {
   usernameExist(state: State): boolean;
   getUserID(state: State): null | string;
   getEventData(state: State): EventData;
-  getAvailability(state: State): Availability;
+  getAvailability(state: State): { [key: string]: string[] };
   getSplitAvailabilities(state: State, getters: Getters): string[][][] | void;
   getEventName(state: State): string;
   getTimeLabels(state: State): string[];

@@ -11,6 +11,7 @@
     @mousedown="clickHandler"
     @mousemove.prevent="dragHandler"
     @mouseover="hoverHandler"
+    @mouseout="mouseoutHandler"
     :id="hour"
   ></div>
 </template>
@@ -31,6 +32,10 @@ export default {
 
     const hoverHandler = (event) => {
       store.dispatch(ActionTypes.updateHover, event.target.id);
+    };
+
+    const mouseoutHandler = () => {
+      store.dispatch(ActionTypes.updateHover, "MouseOut");
     };
 
     const clickHandler = (event) => {
@@ -88,6 +93,7 @@ export default {
       dragHandler,
       clickHandler,
       hoverHandler,
+      mouseoutHandler,
       styleBinding,
       availability: computed(() => store.getters.getAvailability),
       userID,

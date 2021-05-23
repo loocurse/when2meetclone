@@ -20,8 +20,14 @@ type ActionAugments = Omit<ActionContext<State, State>, "commit"> & {
 };
 export type Actions = {
   [ActionTypes.loadAvailabilities](context: ActionAugments, eventID: any): void;
-  [ActionTypes.addEvent](context: ActionAugments, payload: any): void;
-  [ActionTypes.removeEvent](context: ActionAugments, payload: any): void;
+  [ActionTypes.addEvent](
+    context: ActionAugments,
+    payload: { unixtime: string; eventID: string }
+  ): void;
+  [ActionTypes.removeEvent](
+    context: ActionAugments,
+    payload: { unixtime: string; eventID: string }
+  ): void;
   [ActionTypes.updateDatabase](context: ActionAugments): void;
   [ActionTypes.addUserName](context: ActionAugments, payload: any): void;
   [ActionTypes.updateHover](context: ActionAugments, unixtime: string): void;
@@ -51,7 +57,7 @@ export const actions: ActionTree<State, State> & Actions = {
     });
     // update local storage
     localStorage.setItem(eventID, response.data.id);
-    commit(MutationType.AddUserName, { username, id: response.data.id });
+    commit(MutationType.AddUserName, { name: username, id: response.data.id });
   },
   [ActionTypes.updateHover]({ commit }, unixtime) {
     commit(MutationType.updateHover, unixtime);
