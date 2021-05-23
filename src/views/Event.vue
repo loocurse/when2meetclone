@@ -3,9 +3,19 @@
   <div class="event-details">
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
-      <div class="left" @click="page--"><i class="fas fa-angle-left"></i></div>
+      <div
+        class="left"
+        @click="page !== 0 && page--"
+        :class="page === 0 ? 'unactive' : ''"
+      >
+        <i class="fas fa-angle-left"></i>
+      </div>
       <p>{{ eventRange }}</p>
-      <div class="right" @click="page++">
+      <div
+        class="right"
+        @click="page !== pageNumbers && page++"
+        :class="page === pageNumbers ? 'unactive' : ''"
+      >
         <i class="fas fa-angle-right"></i>
       </div>
     </div>
@@ -45,6 +55,7 @@ export default {
       page,
       eventRange: computed(() => store.getters.getTopLabel),
       userName: computed(() => store.state.userName),
+      pageNumbers: computed(() => store.getters.getPageNumbers),
       eventName: computed(() => store.getters.getEventName),
       usernameExist: computed(() => store.getters.usernameExist),
     };
@@ -53,6 +64,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.unactive {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+}
 .event-details {
   margin-top: 20px;
   margin-left: 40px;

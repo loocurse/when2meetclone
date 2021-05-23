@@ -36,6 +36,7 @@ export default {
 
     const mouseoutHandler = () => {
       store.dispatch(ActionTypes.updateHover, "MouseOut");
+      console.log("mouseout");
     };
 
     const clickHandler = (event) => {

@@ -27,7 +27,10 @@ export default {
   },
   methods: {
     styleBinding(participant: User) {
-      if (!this.$store.state.currentHover.includes(participant.id)) {
+      const currentHover = this.$store.state.currentHover;
+      if (currentHover.length === 0) {
+        return;
+      } else if (!this.$store.state.currentHover.includes(participant.id)) {
         return {
           "text-decoration": "line-through",
           opacity: "0.5",

@@ -56,7 +56,8 @@ export const mutations: MutationTree<State> & Mutations = {
   [MutationType.updateHover](state, unixtime) {
     if (unixtime === "MouseOut") {
       state.currentHover = state.eventData.users.map((user) => user.id);
+    } else {
+      state.currentHover = state.eventData.availability[unixtime];
     }
-    state.currentHover = state.eventData.availability[unixtime];
   },
 };

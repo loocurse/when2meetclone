@@ -12,6 +12,7 @@ export type Getters = {
   getEventName(state: State): string;
   getTimeLabels(state: State): string[];
   getTopLabel(state: State): string;
+  getPageNumbers(state: State, getters: Getters): number;
   getParticipantList(state: State): User[];
 };
 
@@ -29,14 +30,23 @@ export const getters: GetterTree<State, State> & Getters = {
     return state.eventData.availability;
   },
   getSplitAvailabilities(state, getters) {
+    // split availability data into a 3d array.
+    // dimension 1: pages
+    // dimension 2: days (6 days per page)
+    // dimension 3: hour (`numofTimings` hours per day)
+
     if (isEmpty(state.eventData)) {
       return [[[]]];
     }
     const numofTimings = getters.getTimeLabels.length;
     const arr = Object.keys(state.eventData.availability);
-    const arr2 = chunk(arr, numofTimings);
-    return chunk(arr2, 6);
-    //return arr2;
+    const days = chunk(arr, numofTimings);
+    const NUMBER_OF_DAYS_PER_PAGE = 6;
+    return chunk(days, NUMBER_OF_DAYS_PER_PAGE);
+  },
+
+  getPageNumbers(state, getters) {
+    return getters.getSplitAvailabilities.length - 1;
   },
 
   getEventName(state) {
