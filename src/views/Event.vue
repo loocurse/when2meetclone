@@ -1,5 +1,5 @@
 <template>
-  <SignIn v-show="usernameExist" />
+  <SignIn v-show="!usernameExist" />
   <div class="event-details">
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
@@ -84,7 +84,7 @@ export default {
     color: rgb(99, 99, 99);
     p {
       padding: 0 20px;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
     .left,
     .right {

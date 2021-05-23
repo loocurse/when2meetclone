@@ -11,7 +11,7 @@
         <svg height="14" width="14">
           <circle cx="7" cy="7" r="7" fill="#78DA76" />
         </svg>
-        <p>{{ participant.username }}</p>
+        <p>{{ participant.name }}</p>
       </div>
     </div>
   </transition>

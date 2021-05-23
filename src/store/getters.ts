@@ -1,7 +1,7 @@
 import { GetterTree } from "vuex";
 import { EventData, State, User } from "./state";
 import { isEmpty, isNil, chunk } from "lodash";
-import { timeLabelGenerator, getLabelTop, splitToChunks } from "../utils";
+import { timeLabelGenerator, getLabelTop, getMonths } from "../utils";
 
 export type Getters = {
   usernameExist(state: State): boolean;
@@ -14,11 +14,14 @@ export type Getters = {
   getTopLabel(state: State): string;
   getPageNumbers(state: State, getters: Getters): number;
   getParticipantList(state: State): User[];
+  getEventDetails(
+    state: State
+  ): { created: string; author: string; participants: number };
 };
 
 export const getters: GetterTree<State, State> & Getters = {
   usernameExist(state) {
-    return isNil(state.userID);
+    return state.userID.length > 0;
   },
   getUserID(state) {
     return state.userID;
@@ -72,5 +75,24 @@ export const getters: GetterTree<State, State> & Getters = {
       return [];
     }
     return state.eventData.users;
+  },
+  getEventDetails(state) {
+    if (isEmpty(state.eventData)) {
+      return { created: "", author: "", participants: 0 };
+    }
+    const date = new Date(state.eventData.createdAt);
+    const monthNames = getMonths();
+    const created = `${date.getDate()} ${
+      monthNames[date.getMonth()]
+    } ${date.getFullYear()}`;
+    const participants = state.eventData.users.length;
+    let author;
+    if (participants === 0) {
+      author = "unknown";
+    } else {
+      console.log(state.eventData.users[0]);
+      author = state.eventData.users[0].name;
+    }
+    return { created, author, participants };
   },
 };

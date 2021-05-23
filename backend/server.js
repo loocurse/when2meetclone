@@ -128,7 +128,7 @@ app.put("/events/:id/adduser", function (req, res) {
   // Update a new user
   const userName = req.body.user;
   const ID = IDGenerator();
-  const userObject = { id: ID, username: userName };
+  const userObject = { id: ID, name: userName };
   user
     .updateOne(
       { _id: req.params.id },

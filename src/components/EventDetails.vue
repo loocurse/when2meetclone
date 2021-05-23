@@ -5,43 +5,24 @@
       <table class="detail-list">
         <tr>
           <th>Created On</th>
-          <td>{{ dateParser }}</td>
+          <td>{{ $store.getters.getEventDetails.created }}</td>
         </tr>
         <tr>
           <th>Author</th>
-          <td>{{ details.author }}</td>
+          <td>{{ $store.getters.getEventDetails.author }}</td>
         </tr>
         <tr>
           <th>Participants</th>
-          <td>{{ details.participants }}</td>
+          <td>{{ $store.getters.getEventDetails.participants }}</td>
         </tr>
       </table>
     </div>
   </transition>
 </template>
 
-<script>
-import { getMonths } from "../utils";
+<script lang="ts">
 export default {
-  data() {
-    return {
-      details: {
-        created: new Date(),
-        author: "John Lim",
-        participants: 3,
-      },
-    };
-  },
-  computed: {
-    dateParser() {
-      let date = this.details.created;
-      let monthNames = getMonths();
 
-      return `${date.getDate()} ${
-        monthNames[date.getMonth()]
-      } ${date.getFullYear()}`;
-    },
-  },
 };
 </script>
 
