@@ -7,6 +7,7 @@ export enum MutationType {
   RemoveAvailability = "REMOVE_AVAILABILITY",
   AddUserName = "ADD_USERNAME",
   RetrieveUserID = "RETRIEVE_USERID",
+  updateHover = "UPDATE_HOVER",
 }
 
 export type Mutations = {
@@ -15,6 +16,7 @@ export type Mutations = {
   [MutationType.RemoveAvailability](state: State, content: any): void;
   [MutationType.AddUserName](state: State, content: any): void;
   [MutationType.RetrieveUserID](state: State, content: any): void;
+  [MutationType.updateHover](state: State, unixtime: string): void;
 };
 
 export const mutations: MutationTree<State> & Mutations = {
@@ -45,4 +47,7 @@ export const mutations: MutationTree<State> & Mutations = {
   [MutationType.RetrieveUserID](state, eventID) {
     state.userID = localStorage.getItem(eventID);
   },
-}
+  [MutationType.updateHover](state, unixtime) {
+    state.currentHover = state.eventData.availability[unixtime];
+  },
+};

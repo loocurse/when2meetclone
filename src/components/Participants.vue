@@ -5,6 +5,7 @@
       <div
         class="participant"
         v-for="participant in participants"
+        :style="styleBinding(participant)"
         :key="participant"
       >
         <svg height="14" width="14">
@@ -16,11 +17,22 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
+import { User } from "@/store/state";
 export default {
   computed: {
     participants() {
       return this.$store.getters.getParticipantList;
+    },
+  },
+  methods: {
+    styleBinding(participant: User) {
+      if (!this.$store.state.currentHover.includes(participant.id)) {
+        return {
+          "text-decoration": "line-through",
+          opacity: "0.5",
+        };
+      }
     },
   },
 };
@@ -48,6 +60,7 @@ export default {
     align-items: center;
     margin-left: 10px;
     margin-bottom: 5px;
+    transition: all 0.1s ease-in;
     p {
       display: inline;
       margin-left: 10px;

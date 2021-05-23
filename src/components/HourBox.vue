@@ -10,6 +10,7 @@
     :key="hour"
     @mousedown="clickHandler"
     @mousemove.prevent="dragHandler"
+    @mouseover="hoverHandler"
     :id="hour"
   ></div>
 </template>
@@ -27,6 +28,10 @@ export default {
     const store = useStore();
     const route = useRoute();
     const userID = store.state.userID;
+
+    const hoverHandler = (event) => {
+      store.dispatch(ActionTypes.updateHover, event.target.id);
+    };
 
     const clickHandler = (event) => {
       event.target.classList.value.includes("selected")
@@ -82,6 +87,7 @@ export default {
     return {
       dragHandler,
       clickHandler,
+      hoverHandler,
       styleBinding,
       availability: computed(() => store.getters.getAvailability),
       userID,

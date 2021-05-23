@@ -9,6 +9,7 @@ export enum ActionTypes {
   removeEvent = "REMOVE_EVENT",
   updateDatabase = "UPDATE_DATABASE",
   addUserName = "ADD_USERNAME",
+  updateHover = "UPDATE_HOVER",
 }
 
 type ActionAugments = Omit<ActionContext<State, State>, "commit"> & {
@@ -23,6 +24,7 @@ export type Actions = {
   [ActionTypes.removeEvent](context: ActionAugments, payload: any): void;
   [ActionTypes.updateDatabase](context: ActionAugments): void;
   [ActionTypes.addUserName](context: ActionAugments, payload: any): void;
+  [ActionTypes.updateHover](context: ActionAugments, unixtime: string): void;
 };
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -50,5 +52,8 @@ export const actions: ActionTree<State, State> & Actions = {
     // update local storage
     localStorage.setItem(eventID, response.data.id);
     commit(MutationType.AddUserName, { username, id: response.data.id });
+  },
+  [ActionTypes.updateHover]({ commit }, unixtime) {
+    commit(MutationType.updateHover, unixtime);
   },
 };
