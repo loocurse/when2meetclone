@@ -3,14 +3,16 @@
   <div class="event-details">
     <h1>{{ eventName }}</h1>
     <div class="date-chooser">
-      <div class="left"><i class="fas fa-angle-left"></i></div>
+      <div class="left" @click="page--"><i class="fas fa-angle-left"></i></div>
       <p>{{ eventRange }}</p>
-      <div class="right"><i class="fas fa-angle-right"></i></div>
+      <div class="right" @click="page++">
+        <i class="fas fa-angle-right"></i>
+      </div>
     </div>
   </div>
 
   <div class="content">
-    <Calendar :userName="userName" />
+    <Calendar :userName="userName" :page="page" />
     <div class="right-information">
       <Participants />
       <EventDetails />
@@ -24,7 +26,7 @@ import Participants from "../components/Participants";
 import EventDetails from "../components/EventDetails";
 import SignIn from "../components/SignIn.vue";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 export default {
   emits: ["signIn"],
@@ -37,7 +39,10 @@ export default {
   setup() {
     const store = useStore();
 
+    const page = ref(0);
+
     return {
+      page,
       eventRange: computed(() => store.getters.getTopLabel),
       userName: computed(() => store.state.userName),
       eventName: computed(() => store.getters.getEventName),

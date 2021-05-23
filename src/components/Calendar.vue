@@ -1,20 +1,20 @@
 <template>
-  <transition name="fade" appear>
-    <div class="outer">
-      <div class="timelabels">
-        <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
-      </div>
-      <div class="calendar">
-        <div class="day" v-for="(day, idx) in result" :key="day">
-          <div class="daylabel">
-            <span>{{ getDate(day[0]) }}</span>
-            <p>{{ getDay(day[0]) }}</p>
-          </div>
-          <HourBox :day="day" :idx="idx" />
+  <!--<transition name="fade" appear>-->
+  <div class="outer">
+    <div class="timelabels">
+      <span v-for="tlabel in timeLabels" :key="tlabel">{{ tlabel }}</span>
+    </div>
+    <div class="calendar">
+      <div class="day" v-for="(day, idx) in result" :key="day">
+        <div class="daylabel">
+          <span>{{ getDate(day[0]) }}</span>
+          <p>{{ getDay(day[0]) }}</p>
         </div>
+        <HourBox :day="day" :idx="idx" />
       </div>
     </div>
-  </transition>
+  </div>
+  <!--</transition>-->
 </template>
 
 <script>
@@ -23,19 +23,26 @@ import { getDate, getDay } from "../utils";
 import HourBox from "./HourBox.vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, toRefs } from "vue";
 
 export default {
   components: { HourBox },
-  setup() {
+  props: {
+    page: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup(props) {
     const route = useRoute();
     const store = useStore();
+    const { page } = toRefs(props);
 
     store.dispatch(ActionTypes.loadAvailabilities, route.params.id);
 
     return {
       availability: computed(() => store.getters.getAvailability),
-      result: computed(() => store.getters.getSplitAvailabilities),
+      result: computed(() => store.getters.getSplitAvailabilities[page.value]),
       getDate,
       getDay,
       timeLabels: computed(() => store.getters.getTimeLabels),

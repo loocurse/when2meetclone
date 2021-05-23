@@ -8,7 +8,7 @@ export type Getters = {
   getUserID(state: State): null | string;
   getEventData(state: State): EventData;
   getAvailability(state: State): Availability;
-  getSplitAvailabilities(state: State): any;
+  getSplitAvailabilities(state: State, getters: Getters): string[][][] | void;
   getEventName(state: State): string;
   getTimeLabels(state: State): string[];
   getTopLabel(state: State): string;
@@ -28,12 +28,17 @@ export const getters: GetterTree<State, State> & Getters = {
   getAvailability(state) {
     return state.eventData.availability;
   },
-  getSplitAvailabilities(state) {
+  getSplitAvailabilities(state, getters) {
     if (isEmpty(state.eventData)) {
-      return;
+      return [[[]]];
     }
-    return splitToChunks(state.eventData.availability, 6);
+    const numofTimings = getters.getTimeLabels.length;
+    const arr = Object.keys(state.eventData.availability);
+    const arr2 = chunk(arr, numofTimings);
+    return chunk(arr2, 6);
+    //return arr2;
   },
+
   getEventName(state) {
     return state.eventData.event_name;
   },

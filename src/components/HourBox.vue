@@ -61,8 +61,6 @@ export default {
     };
 
     const styleBinding = (arr) => {
-      console.log(arr);
-      console.log(userID);
       if (arr.includes(userID)) {
         return {
           "background-color": "hsl(218, 76%, 84%)",

@@ -1,3 +1,5 @@
+import { isNil } from "lodash";
+
 const monthNames = new Array();
 monthNames[0] = "Jan";
 monthNames[1] = "Feb";
@@ -100,7 +102,10 @@ const getDate = function (unixObject: number): number {
   const a = new Date(unixObject * 1000);
   return a.getDate();
 };
-const getDay = function (unixObject: number): string {
+const getDay = function (unixObject: number) {
+  if (isNil(unixObject)) {
+    return "";
+  }
   const a = new Date(unixObject * 1000);
   return Intl.DateTimeFormat("en-US", { weekday: "long" }).format(a);
 };
