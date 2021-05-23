@@ -20,13 +20,11 @@ export interface User {
 export interface State {
   eventData: EventData;
   userID: string;
-  currentView: string[];
   currentHover: string[];
 }
 
 export const state: State = {
   eventData: <EventData>{},
   userID: "",
-  currentView: [],
   currentHover: [],
 };

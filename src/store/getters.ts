@@ -90,7 +90,6 @@ export const getters: GetterTree<State, State> & Getters = {
     if (participants === 0) {
       author = "unknown";
     } else {
-      console.log(state.eventData.users[0]);
       author = state.eventData.users[0].name;
     }
     return { created, author, participants };

@@ -71,14 +71,6 @@ export default {
     };
 
     const styleBinding = (arr) => {
-      if (arr.includes(userID)) {
-        return {
-          "background-color": "hsl(218, 76%, 84%)",
-          border: "solid 0.1px hsl(228, 33%, 91%)",
-          "border-top": "none",
-          "border-left": "none",
-        };
-      }
       const degree = arr.length;
       return {
         "background-color": `hsl(157, 59%, ${100 - degree * 10}%)`,
