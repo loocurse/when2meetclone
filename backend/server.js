@@ -12,7 +12,6 @@ var cors = require("cors");
 const { json } = require("express");
 
 require("dotenv").config;
-console.log(process.env);
 connectDB();
 
 const app = express();
