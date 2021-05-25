@@ -5,7 +5,7 @@ const URI = `mongodb+srv://kehvinbehvin:when2meetclone@cluster0.0lnwu.mongodb.ne
 
 const connectDB = async () => {
   await mongoose.connect(
-    "mongodb+srv://kehvinbehvin:@cluster0.0lnwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://lucasng:NEq3B960kb19neWe@cluster0.0lnwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,

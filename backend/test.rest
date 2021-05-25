@@ -3,6 +3,11 @@ http://localhost:3000/api/events
 ###
 http://localhost:3000/api/events/60a9f953e3b13f79f3bc80e6
 
+### 
+http://localhost:3000/event/60a9f953e3b13f79f3bc80e6
+
+###
+https://when2meetclone.herokuapp.com/api/events
 ###
 
 POST http://localhost:3000/api/events/add HTTP/1.1
