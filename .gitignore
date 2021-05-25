@@ -23,5 +23,4 @@ pnpm-debug.log*
 *.sw?
 
 # credentials
-/backend/credentials.json
 /backend/test.rest
