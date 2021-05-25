@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./connection");
-const user = require("./models/Event");
+const user = require("./models/event.js");
 var bodyParser = require("body-parser");
 
 const {
