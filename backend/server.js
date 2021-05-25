@@ -1,9 +1,8 @@
 const express = require("express");
 const connectDB = require("./connection");
-// const userRouter = require("../backend/API");
 const user = require("./models/Event");
 var bodyParser = require("body-parser");
-//const unix_converter = require("./utils");
+
 const {
   IDGenerator,
   create_users_time_obj,
@@ -27,7 +26,9 @@ app.use(
 app.use(express.json());
 app.use(cors());
 
-app.get("/events", function (req, res) {
+
+
+app.get("/api/events", function (req, res) {
   //Show all users
   user
     .find()
@@ -35,7 +36,7 @@ app.get("/events", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-app.get("/events/:id", function (req, res) {
+app.get("/api/events/:id", function (req, res) {
   //Finds users by ID
   user
     .findById(req.params.id)
@@ -43,8 +44,7 @@ app.get("/events/:id", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-
-app.post("/events/add", function (req, res) {
+app.post("/api/events/add", function (req, res) {
   //Add a new user
   const event_name = req.body.event_name;
   const start_date = req.body.start_date;
@@ -74,7 +74,7 @@ app.post("/events/add", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-app.put("/events/:id/adduser", function (req, res) {
+app.put("/api/events/:id/adduser", function (req, res) {
   // Update a new user
   const userName = req.body.user;
   const ID = IDGenerator();
@@ -89,7 +89,7 @@ app.put("/events/:id/adduser", function (req, res) {
     .catch((err) => console.log(err));
 });
 
-app.put("/events/:id/update", function (req, res) {
+app.put("/api/events/:id/update", function (req, res) {
   // update availabilities of user
   const avail = req.body.availability;
   user
@@ -102,6 +102,14 @@ app.put("/events/:id/update", function (req, res) {
       res.json({ message: "Successfully updated availability of user" })
     );
 });
+
+if(process.env.NODE_ENV === 'production') {
+  // static folder
+  app.use(express.static(__dirname + "/public/"));
+
+  // handle SPA
+  app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'))
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening to port ${port}`));

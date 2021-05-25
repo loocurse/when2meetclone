@@ -1,11 +1,11 @@
-http://localhost:3000/events
+http://localhost:3000/api/events
 
 ###
-http://localhost:3000/events/60a9f953e3b13f79f3bc80e6
+http://localhost:3000/api/events/60a9f953e3b13f79f3bc80e6
 
 ###
 
-POST http://localhost:3000/events/add HTTP/1.1
+POST http://localhost:3000/api/events/add HTTP/1.1
 content-type: application/json
 
 {
@@ -19,11 +19,11 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:3000/events/02985 HTTP/1.1
+PUT http://localhost:3000/api/events/02985 HTTP/1.1
 
 ###
 
-PUT http://localhost:3000/events/60a34052825fbb1dc9f06eff/adduser HTTP/1.1
+PUT http://localhost:3000/api/events/60a34052825fbb1dc9f06eff/adduser HTTP/1.1
 content-type: application/json
 
 {
