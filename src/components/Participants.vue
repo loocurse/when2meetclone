@@ -4,7 +4,7 @@
     <div
       class="participant"
       v-for="participant in participants"
-      :style="styleBinding(participant)"
+      :style="styleBindingParticipant(participant)"
       :key="participant"
     >
       <svg height="14" width="14">
@@ -23,7 +23,7 @@ export default {
     },
   },
   methods: {
-    styleBinding(participant) {
+    styleBindingParticipant(participant) {
       if (!this.$store.state.currentHover.includes(participant.id)) {
         return {
           "text-decoration": "line-through",

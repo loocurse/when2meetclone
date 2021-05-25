@@ -1,7 +1,11 @@
 <template>
   <div
     class="hour"
-    :style="styleBinding(availability[hour], idx)"
+    :style="
+      $store.state.adding
+        ? styleBindingUser(availability[hour])
+        : styleBinding(availability[hour])
+    "
     :class="[
       idx === 0 ? 'first' : '',
       availability[hour].includes(userID) ? 'selected' : '',
@@ -39,16 +43,20 @@ export default {
     };
 
     const clickHandler = (event) => {
-      event.target.classList.value.includes("selected")
-        ? (action = "REMOVE")
-        : (action = "ADD");
-      UPDATE_AVAILABILITY(action, event);
+      if (store.state.adding) {
+        event.target.classList.value.includes("selected")
+          ? (action = "REMOVE")
+          : (action = "ADD");
+        UPDATE_AVAILABILITY(action, event);
+      }
     };
 
     const dragHandler = (event) => {
-      let mouseClickedDown = event.buttons === 1;
-      if (mouseClickedDown) {
-        UPDATE_AVAILABILITY(action, event);
+      if (store.state.adding) {
+        let mouseClickedDown = event.buttons === 1;
+        if (mouseClickedDown) {
+          UPDATE_AVAILABILITY(action, event);
+        }
       }
     };
 
@@ -80,9 +88,22 @@ export default {
         "border-left": "none",
       };
     };
+    const styleBindingUser = (arr) => {
+      const users = arr.filter((id) => id === store.state.userID);
+      console.log(users);
+      const degree = users.length;
+      return {
+        "background-color": `hsl(157, 59%, ${100 - degree * 10}%)`,
+        border:
+          degree === 0 ? "" : `solid 0.1px hsl(157, 59%, ${90 - degree * 10}%)`,
+        "border-top": "none",
+        "border-left": "none",
+      };
+    };
 
     return {
       dragHandler,
+      styleBindingUser,
       clickHandler,
       hoverHandler,
       mouseoutHandler,

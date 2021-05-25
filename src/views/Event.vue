@@ -22,7 +22,12 @@
       </div>
     </div>
 
-    <button>+ ADD</button>
+    <button
+      @click="$store.state.adding = !$store.state.adding"
+      :class="$store.state.adding ? 'active' : ''"
+    >
+      + ADD
+    </button>
   </div>
 
   <div class="content">
@@ -113,21 +118,16 @@ export default {
     border: 0;
     background-color: #21ae83;
     color: white;
-    &:focus {
-      background: #129e74;
-      outline: none;
-      -webkit-box-shadow: inset 0px 0px 8px #0a5841;
-      -moz-box-shadow: inset 0px 0px 8px #0a5841;
-      box-shadow: inset 0px 0px 8px #0a5841;
-    }
 
     cursor: pointer;
-    /*box-shadow: $box-shadow;*/
     transition: 0.1s ease-in-out;
-    /*&:hover {
-      box-shadow: $box-shadow-hover;
-      transform: scale(1.08);
-    }*/
+  }
+  .active {
+    background: #129e74;
+    outline: none;
+    -webkit-box-shadow: inset 0px 0px 8px #0a5841;
+    -moz-box-shadow: inset 0px 0px 8px #0a5841;
+    box-shadow: inset 0px 0px 8px #0a5841;
   }
 }
 .content {

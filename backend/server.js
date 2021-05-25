@@ -43,56 +43,6 @@ app.get("/events/:id", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-app.get("/events/:id/1", function (req, res) {
-  //Show 1st page of the user chosen
-  user
-    .findById(req.params.id)
-    .then((doc) => {
-      let pageTimeSlots = retrievePage(
-        doc.availability,
-        1, // page number
-        6, // number of days per page
-        parseInt(doc.start_time),
-        parseInt(doc.end_time)
-      );
-      res.json(pageTimeSlots);
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-app.get("/events/:id/2", function (req, res) {
-  //Show 2nd page of the user chosen
-  user
-    .findById(req.params.id)
-    .then((doc) => {
-      let pageTimeSlots = retrievePage(
-        doc.availability,
-        2, //page number
-        6, //number of days per page
-        parseInt(doc.start_time),
-        parseInt(doc.end_time)
-      );
-      res.json(pageTimeSlots);
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-app.get("/events/:id/3", function (req, res) {
-  //Show 3rd page of the user chosen
-  user
-    .findById(req.params.id)
-    .then((doc) => {
-      let pageTimeSlots = retrievePage(
-        doc.availability,
-        3, //page number
-        6, //number of days per page
-        parseInt(doc.start_time),
-        parseInt(doc.end_time)
-      );
-      res.json(pageTimeSlots);
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
-});
 
 app.post("/events/add", function (req, res) {
   //Add a new user
