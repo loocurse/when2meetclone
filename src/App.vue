@@ -78,4 +78,13 @@ body {
     }
   }
 }
+
+.drop-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transition: 0.2s ease-in-out;
+  &:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+  }
+}
 </style>

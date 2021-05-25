@@ -1,24 +1,28 @@
 <template>
   <SignIn v-show="!usernameExist" />
   <div class="event-details">
-    <h1>{{ eventName }}</h1>
-    <div class="date-chooser">
-      <div
-        class="left"
-        @click="page !== 0 && page--"
-        :class="page === 0 ? 'unactive' : ''"
-      >
-        <i class="fas fa-angle-left"></i>
-      </div>
-      <p>{{ eventRange }}</p>
-      <div
-        class="right"
-        @click="page !== pageNumbers && page++"
-        :class="page === pageNumbers ? 'unactive' : ''"
-      >
-        <i class="fas fa-angle-right"></i>
+    <div class="information">
+      <h1>{{ eventName }}</h1>
+      <div class="date-chooser">
+        <div
+          class="left"
+          @click="page !== 0 && page--"
+          :class="page === 0 ? 'unactive' : ''"
+        >
+          <i class="fas fa-angle-left"></i>
+        </div>
+        <p>{{ eventRange }}</p>
+        <div
+          class="right"
+          @click="page !== pageNumbers && page++"
+          :class="page === pageNumbers ? 'unactive' : ''"
+        >
+          <i class="fas fa-angle-right"></i>
+        </div>
       </div>
     </div>
+
+    <button>+ ADD</button>
   </div>
 
   <div class="content">
@@ -64,33 +68,66 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles.scss";
+
 .unactive {
   opacity: 0.4;
   cursor: not-allowed !important;
 }
 .event-details {
   margin-top: 20px;
-  margin-left: 40px;
+  margin-bottom: 10px;
+  margin-left: 70px;
   display: flex;
+  width: 670px;
   align-items: center;
-  h1 {
-    text-transform: uppercase;
-    font-size: 2rem;
-    margin-right: 40px;
-  }
-  .date-chooser {
+  justify-content: space-between;
+  overflow: show;
+  .information {
     display: flex;
-    align-items: center;
-    color: rgb(99, 99, 99);
-    p {
-      padding: 0 20px;
-      font-size: 1.6rem;
-    }
-    .left,
-    .right {
-      cursor: pointer;
+    align-items: baseline;
+    h1 {
+      text-transform: uppercase;
       font-size: 2rem;
+      margin-right: 40px;
     }
+    .date-chooser {
+      display: flex;
+      align-items: center;
+      color: rgb(99, 99, 99);
+      p {
+        padding: 0 20px;
+        font-size: 1.6rem;
+      }
+      .left,
+      .right {
+        cursor: pointer;
+        font-size: 2rem;
+      }
+    }
+  }
+
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    border: 0;
+    background-color: #21ae83;
+    color: white;
+    &:focus {
+      background: #129e74;
+      outline: none;
+      -webkit-box-shadow: inset 0px 0px 8px #0a5841;
+      -moz-box-shadow: inset 0px 0px 8px #0a5841;
+      box-shadow: inset 0px 0px 8px #0a5841;
+    }
+
+    cursor: pointer;
+    /*box-shadow: $box-shadow;*/
+    transition: 0.1s ease-in-out;
+    /*&:hover {
+      box-shadow: $box-shadow-hover;
+      transform: scale(1.08);
+    }*/
   }
 }
 .content {

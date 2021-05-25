@@ -1,24 +1,21 @@
 <template>
-  <transition name="fade" appear>
-    <div class="participants">
-      <h3>Participants</h3>
-      <div
-        class="participant"
-        v-for="participant in participants"
-        :style="styleBinding(participant)"
-        :key="participant"
-      >
-        <svg height="14" width="14">
-          <circle cx="7" cy="7" r="7" fill="#78DA76" />
-        </svg>
-        <p>{{ participant.name }}</p>
-      </div>
+  <div class="participants drop-shadow">
+    <h3>Participants</h3>
+    <div
+      class="participant"
+      v-for="participant in participants"
+      :style="styleBinding(participant)"
+      :key="participant"
+    >
+      <svg height="14" width="14">
+        <circle cx="7" cy="7" r="7" fill="#78DA76" />
+      </svg>
+      <p>{{ participant.name }}</p>
     </div>
-  </transition>
+  </div>
 </template>
 
-<script lang="ts">
-import { User } from "@/store/state";
+<script>
 export default {
   computed: {
     participants() {
@@ -26,7 +23,7 @@ export default {
     },
   },
   methods: {
-    styleBinding(participant: User) {
+    styleBinding(participant) {
       if (!this.$store.state.currentHover.includes(participant.id)) {
         return {
           "text-decoration": "line-through",
@@ -39,6 +36,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../styles.scss";
+
 .participants {
   border-radius: 20px;
   background-color: white;

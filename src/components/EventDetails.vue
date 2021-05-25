@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" appear>
-    <div class="event-deets">
+    <div class="event-deets  drop-shadow">
       <h3>Event Details</h3>
       <table class="detail-list">
         <tr>
@@ -20,12 +20,6 @@
   </transition>
 </template>
 
-<script lang="ts">
-export default {
-
-};
-</script>
-
 <style lang="scss" scoped>
 .event-deets {
   margin-top: 20px;
@@ -33,6 +27,7 @@ export default {
   width: 100%;
   border-radius: 20px;
   background-color: white;
+  
   h3 {
     font-size: 20px;
     font-weight: bold;
