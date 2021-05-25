@@ -4,12 +4,15 @@ const mongoose = require("mongoose");
 const URI = `mongodb+srv://kehvinbehvin:when2meetclone@cluster0.0lnwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGO_PROD_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  });
+  await mongoose.connect(
+    "mongodb+srv://kehvinbehvin:@cluster0.0lnwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    }
+  );
   console.log("Database has been connected");
 };
 
