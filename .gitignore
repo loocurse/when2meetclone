@@ -24,3 +24,4 @@ pnpm-debug.log*
 
 # credentials
 /backend/test.rest
+/backend/credentials.json
