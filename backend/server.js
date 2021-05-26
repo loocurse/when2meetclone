@@ -8,9 +8,9 @@ connectDB();
 
 const app = express();
 
-app.use("/api/events", router);
 app.use(express.json());
 app.use(cors());
+app.use("/api/events", router);
 
 //if (process.env.NODE_ENV === "production") {
 if (true) {

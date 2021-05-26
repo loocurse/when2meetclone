@@ -1,6 +1,6 @@
 const express = require("express");
 const user = require("./Models/Event.js");
-const { IDGenerator, create_users_time_obj } = require("./utils.js");
+const { IDGenerator, generateAvailability } = require("./utils.js");
 
 var router = express.Router()
 
@@ -22,12 +22,13 @@ router.get("/:id", function (req, res) {
 
 router.post("/add", function (req, res) {
   //Add a new user
+  console.log(req.body)
   const event_name = req.body.event_name;
   const start_date = req.body.start_date;
   const end_date = req.body.end_date;
   const start_time = req.body.start_time;
   const end_time = req.body.end_time;
-  const availability = create_users_time_obj(
+  const availability = generateAvailability(
     start_date,
     end_date,
     start_time,
