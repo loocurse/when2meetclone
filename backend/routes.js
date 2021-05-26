@@ -4,7 +4,7 @@ const { IDGenerator, create_users_time_obj } = require("./utils.js");
 
 var router = express.Router()
 
-router.get("/api/events", function (req, res) {
+router.get("/", function (req, res) {
   //Show all users
   user
     .find()
@@ -12,7 +12,7 @@ router.get("/api/events", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.get("/api/events/:id", function (req, res) {
+router.get("/:id", function (req, res) {
   //Finds users by ID
   user
     .findById(req.params.id)
@@ -20,7 +20,7 @@ router.get("/api/events/:id", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.post("/api/events/add", function (req, res) {
+router.post("/add", function (req, res) {
   //Add a new user
   const event_name = req.body.event_name;
   const start_date = req.body.start_date;
@@ -50,7 +50,7 @@ router.post("/api/events/add", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.put("/api/events/:id/adduser", function (req, res) {
+router.put(":id/adduser", function (req, res) {
   // Update a new user
   const userName = req.body.user;
   const ID = IDGenerator();
@@ -65,7 +65,7 @@ router.put("/api/events/:id/adduser", function (req, res) {
     .catch((err) => console.log(err));
 });
 
-router.put("/api/events/:id/update", function (req, res) {
+router.put("/:id/update", function (req, res) {
   // update availabilities of user
   const avail = req.body.availability;
   user

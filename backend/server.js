@@ -8,7 +8,7 @@ connectDB();
 
 const app = express();
 
-app.use("/", router);
+app.use("/api/events", router);
 app.use(express.json());
 app.use(cors());
 
