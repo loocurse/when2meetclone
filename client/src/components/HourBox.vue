@@ -1,11 +1,7 @@
 <template>
   <div
     class="hour"
-    :style="
-      $store.state.adding
-        ? styleBindingUser(availability[hour])
-        : styleBinding(availability[hour])
-    "
+    :style="styleBinding(availability[hour])"
     :class="[
       idx === 0 ? 'first' : '',
       availability[hour].includes(userID) ? 'selected' : '',
@@ -43,20 +39,16 @@ export default {
     };
 
     const clickHandler = (event) => {
-      if (store.state.adding) {
-        event.target.classList.value.includes("selected")
-          ? (action = "REMOVE")
-          : (action = "ADD");
-        UPDATE_AVAILABILITY(action, event);
-      }
+      event.target.classList.value.includes("selected")
+        ? (action = "REMOVE")
+        : (action = "ADD");
+      UPDATE_AVAILABILITY(action, event);
     };
 
     const dragHandler = (event) => {
-      if (store.state.adding) {
-        let mouseClickedDown = event.buttons === 1;
-        if (mouseClickedDown) {
-          UPDATE_AVAILABILITY(action, event);
-        }
+      let mouseClickedDown = event.buttons === 1;
+      if (mouseClickedDown) {
+        UPDATE_AVAILABILITY(action, event);
       }
     };
 

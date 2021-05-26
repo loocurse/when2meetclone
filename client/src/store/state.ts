@@ -21,12 +21,10 @@ export interface State {
   eventData: EventData;
   userID: string;
   currentHover: string[];
-  adding: boolean;
 }
 
 export const state: State = {
   eventData: <EventData>{},
   userID: "",
   currentHover: [],
-  adding: false,
 };

@@ -10,6 +10,7 @@ export enum ActionTypes {
   updateDatabase = "UPDATE_DATABASE",
   addUserName = "ADD_USERNAME",
   updateHover = "UPDATE_HOVER",
+  removeSelfAvailability = "REMOVE_SELF_AVAILABILITY",
 }
 
 type ActionAugments = Omit<ActionContext<State, State>, "commit"> & {
@@ -61,5 +62,9 @@ export const actions: ActionTree<State, State> & Actions = {
   },
   [ActionTypes.updateHover]({ commit }, unixtime) {
     commit(MutationType.updateHover, unixtime);
+  },
+  async [ActionTypes.removeSelfAvailability]({ commit, dispatch }) {
+    commit(MutationType.removeSelfAvailability);
+    dispatch("UPDATE_DATABASE");
   },
 };
