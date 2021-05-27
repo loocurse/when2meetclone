@@ -9,6 +9,7 @@ export enum MutationType {
   AddUserName = "ADD_USERNAME",
   RetrieveUserID = "RETRIEVE_USERID",
   updateHover = "UPDATE_HOVER",
+  removeSelfAvailability = "REMOVE_SELF_AVAILABILITY",
 }
 
 export type Mutations = {
@@ -58,6 +59,13 @@ export const mutations: MutationTree<State> & Mutations = {
       state.currentHover = state.eventData.users.map((user) => user.id);
     } else {
       state.currentHover = state.eventData.availability[unixtime];
+    }
+  },
+  [MutationType.removeSelfAvailability](state) {
+    for (const unixtime of Object.keys(state.eventData.availability)) {
+      state.eventData.availability[unixtime] = state.eventData.availability[
+        unixtime
+      ].filter((userid) => userid !== state.userID);
     }
   },
 };

@@ -22,11 +22,13 @@
       </div>
     </div>
 
-    <button
-      @click="$store.state.adding = !$store.state.adding"
-      :class="$store.state.adding ? 'active' : ''"
-    >
-      + ADD
+    <button @click="clearAll" class="drop-shadow">
+      <img
+        src="https://image.flaticon.com/icons/png/512/72/72205.png"
+        width="30"
+        alt=""
+        srcset=""
+      />
     </button>
   </div>
 
@@ -57,10 +59,14 @@ export default {
   },
   setup() {
     const store = useStore();
+    const clearAll = () => {
+      store.dispatch("REMOVE_SELF_AVAILABILITY");
+    };
 
     const page = ref(0);
 
     return {
+      clearAll,
       page,
       eventRange: computed(() => store.getters.getTopLabel),
       userName: computed(() => store.state.userName),
@@ -84,7 +90,7 @@ export default {
   margin-bottom: 10px;
   margin-left: 70px;
   display: flex;
-  width: 670px;
+  width: 570px;
   align-items: center;
   justify-content: space-between;
   overflow: show;
@@ -114,20 +120,15 @@ export default {
 
   button {
     padding: 0.5rem 1rem;
-    border-radius: 30px;
+    border-radius: 10px;
     border: 0;
-    background-color: #21ae83;
+    background-color: white;
     color: white;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     transition: 0.1s ease-in-out;
-  }
-  .active {
-    background: #129e74;
-    outline: none;
-    -webkit-box-shadow: inset 0px 0px 8px #0a5841;
-    -moz-box-shadow: inset 0px 0px 8px #0a5841;
-    box-shadow: inset 0px 0px 8px #0a5841;
   }
 }
 .content {
