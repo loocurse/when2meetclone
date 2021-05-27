@@ -51,7 +51,7 @@ router.post("/add", function (req, res) {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.put(":id/adduser", function (req, res) {
+router.put("/:id/adduser", function (req, res) {
   // Update a new user
   const userName = req.body.user;
   const ID = IDGenerator();
