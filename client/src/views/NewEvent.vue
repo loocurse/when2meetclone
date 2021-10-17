@@ -68,11 +68,11 @@ export default {
       }
       return num;
     };
-    this.sdate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
+    this.sdate = `${a.getFullYear()}-${appendZero(a.getMonth() + 1)}-${appendZero(
       a.getDate()
     )}`;
     a.setDate(a.getDate() + 5);
-    this.edate = `${a.getFullYear()}-${appendZero(a.getMonth())}-${appendZero(
+    this.edate = `${a.getFullYear()}-${appendZero(a.getMonth() + 1)}-${appendZero(
       a.getDate()
     )}`;
   },
