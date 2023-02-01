@@ -3,8 +3,8 @@ const connectDB = require("./connection");
 const router = require("./routes");
 var cors = require("cors");
 
-require("dotenv").config;
-connectDB();
+require("dotenv").config();
+connectDB(process.env.MONGO_DB_URI);
 
 const app = express();
 
@@ -22,4 +22,4 @@ if (true) {
 }
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening to port ${port}`));
+app.listen(port, () => console.log(`[WHEN2MEETCLONE]: Listening to port ${port}`));
